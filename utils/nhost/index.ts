@@ -1,35 +1,14 @@
-import { NhostClient } from "@nhost/nhost-js";
-import { useNhostAuth } from "@nhost/react-auth";
-import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { meAtom } from "utils/jotai";
+import { NhostClient } from "@nhost/nextjs";
 
+import { BACKEND_URL } from "utils/constants/env";
+console.log(BACKEND_URL);
+if (!BACKEND_URL) {
+  throw new Error("BACKEND_URL is not defined");
+}
 const nhost = new NhostClient({
-  autoRefreshToken: true,
-  autoLogin: true,
-  backendUrl:
-    process.env.PUBLIC_NHOST_BACKEND_URL ??
-    "https://whflujlkvojfebejcjmk.nhost.run",
+  backendUrl: BACKEND_URL as string,
 });
 
-console.log("gql", nhost.graphql.getUrl());
-
-export const useAuth = () => {
-  const { isAuthenticated, isLoading } = useNhostAuth();
-  const [me, setMe] = useAtom(meAtom);
-  const user = nhost.auth.getUser();
-
-  useEffect(() => {
-    if (!me && user) {
-      setMe(user);
-    }
-  }, [me, setMe, user]);
-
-  return {
-    user,
-    isAuthenticated,
-    isLoading,
-  };
-};
+// console.log("gql", nhost.graphql.getUrl());
 
 export default nhost;

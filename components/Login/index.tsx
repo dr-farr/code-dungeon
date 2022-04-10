@@ -1,22 +1,10 @@
-import { useForm } from "@mantine/form";
-import {
-  PasswordInput,
-  Group,
-  Button,
-  Box,
-  Title,
-  Loader,
-} from "@mantine/core";
+import { Group, Button, Box, Title } from "@mantine/core";
+import Image from "next/image";
+import { Fragment } from "react";
 
-import { useNhostAuth } from "@nhost/react-auth";
-
-import { Fragment, useEffect } from "react";
-
-import nhost, { useAuth } from "utils/nhost";
-import { User } from "components/UserAccount";
+import nhost from "utils/nhost";
 
 function Login() {
-  const { user, isLoading } = useAuth();
   const handleSubmit = async () => {
     const signInResponse = await nhost.auth.signIn({
       provider: "github",
@@ -30,11 +18,15 @@ function Login() {
   return (
     <Fragment>
       <Box sx={{ maxWidth: 340 }} mx="auto">
-        <Title order={1}>Bash Quest</Title>
-
         <Group position="right" mt="md">
+          <Image
+            width="416"
+            height="71"
+            src="/assets/logo.png"
+            alt="Code Dungeon"
+          />
           <Button onClick={() => handleSubmit()} type="submit">
-            Sign with Github
+            Continue with Github
           </Button>
         </Group>
       </Box>

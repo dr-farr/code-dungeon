@@ -2,11 +2,13 @@ import "../styles/globals.css";
 import Head from "next/head";
 import Image from "next/image";
 import { MantineProvider } from "@mantine/core";
-import { NhostAuthProvider, useNhostAuth } from "@nhost/react-auth";
+import { NhostNextProvider } from "@nhost/nextjs";
 import { NhostApolloProvider } from "@nhost/react-apollo";
+
 import { AppProps } from "next/app";
-import nhost, { useAuth } from "utils/nhost";
+import nhost from "utils/nhost";
 import { Fragment } from "react";
+import { QuizProvider } from "contexts/Quiz";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -14,26 +16,33 @@ export default function App(props: AppProps) {
   return (
     <Fragment>
       <Head>
-        <title>Bash Quest</title>
+        <title>Code Dungeon</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <NhostAuthProvider nhost={nhost}>
-        <NhostApolloProvider nhost={nhost}>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              /** Put your mantine theme override here */
-              colorScheme: "dark",
-            }}
-          >
-            <Component {...pageProps} />
-          </MantineProvider>
-        </NhostApolloProvider>
-      </NhostAuthProvider>
+      {true && (
+        //@ts-ignore
+        <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
+          {true && (
+            //@ts-ignore
+            <NhostApolloProvider nhost={nhost}>
+              <MantineProvider
+                withGlobalStyles
+                withNormalizeCSS
+                theme={{
+                  colorScheme: "dark",
+                }}
+              >
+                <QuizProvider>
+                  <Component {...pageProps} />
+                </QuizProvider>
+              </MantineProvider>
+            </NhostApolloProvider>
+          )}
+        </NhostNextProvider>
+      )}
     </Fragment>
   );
 }
