@@ -1,7 +1,7 @@
 import { NhostClient } from "@nhost/nextjs";
 
 import { BACKEND_URL } from "utils/constants/env";
-console.log(BACKEND_URL);
+
 if (!BACKEND_URL) {
   throw new Error("BACKEND_URL is not defined");
 }

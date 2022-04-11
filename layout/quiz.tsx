@@ -18,6 +18,7 @@ import {
 
 import QuizContext from "contexts/Quiz";
 import Image from "next/image";
+import InfoText from "components/InfoText";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -62,10 +63,12 @@ const Start = () => {
             />
           </Grid.Col>
           <Grid.Col xs={12}>
-            <Group>
-              <Title order={1}>{quiz?.name}</Title>
-              <Title order={2}>{quiz?.description}</Title>
-            </Group>
+            <InfoText>
+              <Group>
+                <Title order={1}>{quiz?.name}</Title>
+                <Title order={2}>{quiz?.description}</Title>
+              </Group>
+            </InfoText>
           </Grid.Col>
           <Grid.Col xs={12}>
             <Transition

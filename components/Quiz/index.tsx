@@ -85,14 +85,6 @@ const Quiz = () => {
     setAnswers(answer);
   };
 
-  // category: "Entertainment: Video Games";
-  // correct_answer: "Madonna";
-  // difficulty: "hard";
-  // incorrect_answers: (3)[("Celeste", "Sierra", "Nina")];
-  // options: (4)[("Celeste", "Sierra", "Nina", "Madonna")];
-  // question: "What was the name of Sonic the Hedgehog&#039;s original human girlfriend?";
-  // type: "multiple";
-
   return (
     <Container>
       <Group>

@@ -3,6 +3,7 @@
 - "!include auth_providers.yaml"
 - "!include auth_question_options.yaml"
 - "!include auth_questions.yaml"
+- "!include auth_quiz_categories.yaml"
 - "!include auth_quizes.yaml"
 - "!include auth_refresh_tokens.yaml"
 - "!include auth_roles.yaml"

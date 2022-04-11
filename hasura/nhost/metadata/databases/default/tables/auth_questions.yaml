@@ -29,3 +29,10 @@ select_permissions:
     - quiz_id
     filter: {}
   role: public
+- permission:
+    columns:
+    - id
+    - name
+    - quiz_id
+    filter: {}
+  role: user

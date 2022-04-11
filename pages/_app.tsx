@@ -32,6 +32,10 @@ export default function App(props: AppProps) {
                 withGlobalStyles
                 withNormalizeCSS
                 theme={{
+                  spacing: {
+                    xs: 2,
+                    xl: 20,
+                  },
                   colorScheme: "dark",
                 }}
               >

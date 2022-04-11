@@ -14,20 +14,34 @@ import {
   Loader,
   Center,
   Container,
+  createStyles,
+  Space,
 } from "@mantine/core";
 
 import React from "react";
-import { useQuizes } from "controllers/quiz/hooks";
+import { useQuizCategories, useQuizes } from "controllers/quiz/hooks";
 import Link from "next/link";
 
 import Dashboard from "layout/app";
+import InfoText from "components/InfoText";
+import Image from "next/image";
+
+const useStyles = createStyles((theme) => ({
+  button: {
+    cursor: "pointer",
+    ":hover": {
+      filter: "drop-shadow( 0px 0px 5px yellowgreen )",
+    },
+  },
+}));
 
 /**
  * List all quiz data in card format
  * @returns {React.ReactElement}
  */
-const QuizesDataList = () => {
-  const { loading, error, data } = useQuizes();
+const QuestList = () => {
+  const { loading, error, data } = useQuizCategories();
+  const { classes } = useStyles();
 
   if (loading) {
     return (
@@ -39,7 +53,7 @@ const QuizesDataList = () => {
 
   return (
     <Container size="xl" px="xs">
-      <Grid>
+      <Grid align="center">
         <Grid.Col>
           {error && <Alert color="red">{JSON.stringify(error)}</Alert>}
         </Grid.Col>
@@ -47,30 +61,23 @@ const QuizesDataList = () => {
           {data?.length ? (
             data.map((item: any, idx: number) => {
               return (
-                <Grid.Col key={idx} xs={6}>
-                  <Card shadow="sm" p="lg">
-                    <Title order={3}>{item.name}</Title>
-                    <Group position="apart">
-                      <Badge color="pink" variant="light">
-                        {item?.difficulty}
-                      </Badge>
-
-                      <Badge color="blue" variant="light">
-                        {item.questions?.length}
-                      </Badge>
-                    </Group>
-
-                    <Link href={`/quiz/${item.id}`} passHref>
-                      <Button
-                        variant="light"
-                        color="blue"
-                        fullWidth
-                        style={{ marginTop: 14 }}
-                      >
-                        Quest
-                      </Button>
-                    </Link>
-                  </Card>
+                <Grid.Col key={idx} xs={12}>
+                  <Link href={`/quest/${item.id}`} passHref>
+                    <Grid>
+                      <Grid.Col xs={12}>
+                        <Center>
+                          <Image
+                            width="416"
+                            height="71"
+                            className={classes.button}
+                            alt={item?.name}
+                            src={item?.image_url}
+                          />
+                          <Text>{item?.description}</Text>
+                        </Center>
+                      </Grid.Col>
+                    </Grid>
+                  </Link>
                 </Grid.Col>
               );
             })
@@ -87,9 +94,12 @@ export default function Home() {
 
   return user ? (
     <Dashboard>
-      <Container>
-        <Title order={1}>Welcome to the Code Dungeon, {user.displayName}</Title>
+      <InfoText>
+        <Title order={3}>
+          Welcome to the Code Dungeon {user.displayName},{" "}
+        </Title>
         <Group>
+          <Space />
           <Text>
             Many have entered, few have left. The Code Dungeon is a place where
             you can test your coding skills and see how far you can go. You can
@@ -105,9 +115,9 @@ export default function Home() {
           </Text>
           <Text> Be brave and have fun!</Text>
         </Group>
-      </Container>
+      </InfoText>
 
-      <QuizesDataList />
+      <QuestList />
     </Dashboard>
   ) : (
     <Login />
