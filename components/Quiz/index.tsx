@@ -19,6 +19,7 @@ import QuizContext from "contexts/Quiz";
 import { Slider, createStyles } from "@mantine/core";
 import clsx from "clsx";
 import Image from "next/image";
+import InfoText from "components/InfoText";
 
 const useStyles = createStyles((theme) => ({
   option: {
@@ -119,25 +120,27 @@ const Quiz = () => {
           </Grid.Col>
           <Grid.Col>
             <Grid>
-              {questionData.options.map((option, i) => {
-                const letter = getLetter(i);
-                const decodedOption = he.decode(option);
+              <InfoText>
+                {questionData.options.map((option, i) => {
+                  const letter = getLetter(i);
+                  const decodedOption = he.decode(option);
 
-                return (
-                  <Grid.Col key={decodedOption} xs={6}>
-                    <Paper
-                      className={clsx(classes.option, {
-                        [classes.active]: userSlectedAns === decodedOption,
-                      })}
-                      onClick={() => handleItemClick(option)}
-                      shadow="xl"
-                      p="xl"
-                    >
-                      <Text> {decodedOption}</Text>
-                    </Paper>
-                  </Grid.Col>
-                );
-              })}
+                  return (
+                    <Grid.Col key={decodedOption} xs={6}>
+                      <Paper
+                        className={clsx(classes.option, {
+                          [classes.active]: userSlectedAns === decodedOption,
+                        })}
+                        onClick={() => handleItemClick(option)}
+                        shadow="xl"
+                        p="xl"
+                      >
+                        <Text> {decodedOption}</Text>
+                      </Paper>
+                    </Grid.Col>
+                  );
+                })}
+              </InfoText>
             </Grid>
           </Grid.Col>
           <Divider />

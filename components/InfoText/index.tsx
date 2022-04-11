@@ -4,15 +4,14 @@ import React from "react";
 
 const useStyles = createStyles((theme) => ({
   root: {
-    // font-family: 'Cinzel', serif;
-
     backgroundColor: "rgba(0,0,0,0.7)",
     padding: "30px!important",
     borderRadius: 20,
   },
   text: {
     "& > *": {
-      fontFamily: "Beau Rivage!important",
+      fontFamily: theme.other.fontFamilySecondary,
+      fontSize: "3rem!important",
     },
   },
 }));

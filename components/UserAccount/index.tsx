@@ -11,6 +11,7 @@ import {
   Menu,
 } from "@mantine/core";
 import nhost from "utils/nhost";
+import Link from "next/link";
 
 const UserButton = () => {
   const theme = useMantineTheme();
@@ -61,8 +62,13 @@ export default function User() {
                 {user?.displayName}
               </Text>
               <Text color="dimmed" size="xs">
-                Level 69 Bitch
-                {/* {user?.email} */}
+                Level 3{" "}
+                <Link
+                  passHref
+                  href="https://user-images.githubusercontent.com/78376735/162839437-7bea91c7-be0a-4d35-b2b9-89cb239b0a07.jpeg"
+                >
+                  <i>Mage Toad</i>
+                </Link>
               </Text>
             </Box>
           </Group>

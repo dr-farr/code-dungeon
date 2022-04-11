@@ -1,7 +1,24 @@
 table:
   name: quiz_categories
   schema: auth
+array_relationships:
+- name: quizes
+  using:
+    foreign_key_constraint_on:
+      column: quiz_category_id
+      table:
+        name: quizes
+        schema: auth
 select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - description
+    - image_url
+    - name
+    - id
+    filter: {}
+  role: public
 - permission:
     allow_aggregations: true
     columns:

@@ -1,7 +1,14 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import Image from "next/image";
-import { MantineProvider } from "@mantine/core";
+import {
+  Center,
+  Container,
+  MantineProvider,
+  Space,
+  Title,
+  createStyles,
+} from "@mantine/core";
 import { NhostNextProvider } from "@nhost/nextjs";
 import { NhostApolloProvider } from "@nhost/react-apollo";
 
@@ -10,8 +17,18 @@ import nhost from "utils/nhost";
 import { Fragment } from "react";
 import { QuizProvider } from "contexts/Quiz";
 
+const useStyles = createStyles((theme) => ({
+  root: {
+    fontFamily: "Cinzel!important",
+    color: "white",
+    fontSize: "1em",
+  },
+}));
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+
+  const { classes } = useStyles();
 
   return (
     <Fragment>
@@ -32,6 +49,10 @@ export default function App(props: AppProps) {
                 withGlobalStyles
                 withNormalizeCSS
                 theme={{
+                  other: {
+                    fontFamilySecondary: "Beau Rivage!important",
+                    fontFamilyPronounced: "Cinzel",
+                  },
                   spacing: {
                     xs: 2,
                     xl: 20,
@@ -43,6 +64,15 @@ export default function App(props: AppProps) {
                   <div className="app">
                     <Component {...pageProps} />
                   </div>
+                  <Container>
+                    <Space h="md" />
+                    <Center>
+                      <Title className={classes.root} order={5}>
+                        Made with 🂾 by us
+                      </Title>
+                    </Center>
+                    <Space h="md" />
+                  </Container>
                 </QuizProvider>
               </MantineProvider>
             </NhostApolloProvider>

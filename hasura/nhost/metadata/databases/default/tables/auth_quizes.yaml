@@ -15,9 +15,9 @@ array_relationships:
         schema: auth
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - difficulty
-    - category
     - description
     - name
     - type
@@ -31,7 +31,6 @@ select_permissions:
     allow_aggregations: true
     columns:
     - difficulty
-    - category
     - description
     - name
     - type

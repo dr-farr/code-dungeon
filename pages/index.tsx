@@ -16,6 +16,7 @@ import {
   Container,
   createStyles,
   Space,
+  Stack,
 } from "@mantine/core";
 
 import React from "react";
@@ -58,26 +59,36 @@ const QuestList = () => {
           {error && <Alert color="red">{JSON.stringify(error)}</Alert>}
         </Grid.Col>
         <Grid align="center">
+          <Grid.Col>
+            <InfoText>
+              <Center>
+                <Image
+                  alt="Dungeon Quests"
+                  width="416"
+                  height="71"
+                  src="https://user-images.githubusercontent.com/78376735/162835967-2d554350-f168-4743-ac8e-913582dbde49.png"
+                />
+              </Center>
+            </InfoText>
+          </Grid.Col>
           {data?.length ? (
             data.map((item: any, idx: number) => {
               return (
                 <Grid.Col key={idx} xs={12}>
-                  <Link href={`/quest/${item.id}`} passHref>
-                    <Grid>
-                      <Grid.Col xs={12}>
-                        <Center>
-                          <Image
-                            width="416"
-                            height="71"
-                            className={classes.button}
-                            alt={item?.name}
-                            src={item?.image_url}
-                          />
-                          <Text>{item?.description}</Text>
-                        </Center>
-                      </Grid.Col>
-                    </Grid>
-                  </Link>
+                  <InfoText>
+                    <Center>
+                      <Link href={`/quest/${item.id}`} passHref>
+                        <Image
+                          width="716"
+                          height="91"
+                          className={classes.button}
+                          alt={item?.name}
+                          src={item?.image_url}
+                        />
+                      </Link>
+                      <Text>{item?.description}</Text>
+                    </Center>
+                  </InfoText>
                 </Grid.Col>
               );
             })
@@ -94,30 +105,32 @@ export default function Home() {
 
   return user ? (
     <Dashboard>
-      <InfoText>
-        <Title order={3}>
-          Welcome to the Code Dungeon {user.displayName},{" "}
-        </Title>
-        <Group>
-          <Space />
-          <Text>
-            Many have entered, few have left. The Code Dungeon is a place where
-            you can test your coding skills and see how far you can go. You can
-            try
-          </Text>
-          <Text>
-            Be careful on your journey, you can only take one quiz at a time.
-            Each quiz will take you further into the uncharted reaches of
-            abomination. You will neeed a tremendous courage to face the
-            unknown. You will need to be prepared. traps and pitfalls, as a user
-            you will need to run through many challenges, these challenges will
-            test your coding skills and knowledge.
-          </Text>
-          <Text> Be brave and have fun!</Text>
-        </Group>
-      </InfoText>
+      <Stack>
+        <InfoText>
+          <Title order={3}>
+            Welcome to the Code Dungeon™ {user.displayName},{" "}
+          </Title>
+          <Group>
+            <Space />
+            <Text>
+              Many have entered, few have left. The Code Dungeon is a place
+              where you can test your coding skills and see how far you can go.
+              You can try
+            </Text>
+            <Text>
+              Be careful on your journey, you can only take one quiz at a time.
+              Each quiz will take you further into the uncharted reaches of
+              abomination. You will neeed a tremendous courage to face the
+              unknown. You will need to be prepared. traps and pitfalls, as a
+              user you will need to run through many challenges, these
+              challenges will test your coding skills and knowledge.
+            </Text>
+            <Text> Be brave and have fun!</Text>
+          </Group>
+        </InfoText>
 
-      <QuestList />
+        <QuestList />
+      </Stack>
     </Dashboard>
   ) : (
     <Login />
