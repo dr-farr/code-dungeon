@@ -4,27 +4,55 @@ import Result from "components/Result";
 
 import {
   Alert,
+  Box,
   Button,
   Center,
   Container,
+  createStyles,
   Grid,
   Group,
   Loader,
   Title,
+  Transition,
 } from "@mantine/core";
 
 import QuizContext from "contexts/Quiz";
 import Image from "next/image";
 
+const useStyles = createStyles((theme) => ({
+  root: {
+    width: "50vw",
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    "& > img": {
+      width: "100%",
+    },
+  },
+  button: {
+    backgroundImage: "url(/assets/start-quiz-button.png)",
+    minWidth: 400,
+    cursor: "pointer",
+    height: 100,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+
+    ":hover": {
+      filter: "drop-shadow( -5px -5px 5px #000 )",
+    },
+  },
+}));
+
 const Start = () => {
   const { startQuiz, quiz } = useContext(QuizContext);
 
-  console.log(quiz);
+  const { classes } = useStyles();
 
   return (
     <Center>
-      <Container size="xl" px="xs">
-        <Grid align="center" gutter={5}>
+      <Container className={classes.root}>
+        <Grid gutter="xl">
           <Grid.Col xs={12}>
             <Image
               width="416"
@@ -37,10 +65,26 @@ const Start = () => {
             <Group>
               <Title order={1}>{quiz?.name}</Title>
               <Title order={2}>{quiz?.description}</Title>
-              <Center>
-                <Button onClick={async () => startQuiz()}> Begin Quest</Button>
-              </Center>
             </Group>
+          </Grid.Col>
+          <Grid.Col xs={12}>
+            <Transition
+              mounted={true}
+              transition="fade"
+              duration={400}
+              timingFunction="ease"
+            >
+              {(styles) => (
+                <div style={styles}>
+                  <Center>
+                    <Box
+                      className={classes.button}
+                      onClick={() => startQuiz()}
+                    ></Box>
+                  </Center>
+                </div>
+              )}
+            </Transition>
           </Grid.Col>
         </Grid>
       </Container>

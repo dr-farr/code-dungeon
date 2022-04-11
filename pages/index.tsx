@@ -49,8 +49,8 @@ const QuizesDataList = () => {
               return (
                 <Grid.Col key={idx} xs={6}>
                   <Card shadow="sm" p="lg">
+                    <Title order={3}>{item.name}</Title>
                     <Group position="apart">
-                      <Text weight={500}>{item.name}</Text>
                       <Badge color="pink" variant="light">
                         {item?.difficulty}
                       </Badge>
@@ -90,6 +90,26 @@ export default function Home() {
 
   return user ? (
     <Dashboard>
+      <Container>
+        <Title order={1}>Welcome to the Code Dungeon, {user.displayName}</Title>
+        <Group>
+          <Text>
+            Many have entered, few have left. The Code Dungeon is a place where
+            you can test your coding skills and see how far you can go. You can
+            try
+          </Text>
+          <Text>
+            Be careful on your journey, you can only take one quiz at a time.
+            Each quiz will take you further into the uncharted reaches of
+            abomination. You will neeed a tremendous courage to face the
+            unknown. You will need to be prepared. traps and pitfalls, as a user
+            you will need to run through many challenges, these challenges will
+            test your coding skills and knowledge.
+          </Text>
+          <Text> Be brave and have fun!</Text>
+        </Group>
+      </Container>
+
       <QuizesDataList />
     </Dashboard>
   ) : (

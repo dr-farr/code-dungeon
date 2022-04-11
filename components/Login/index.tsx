@@ -27,7 +27,16 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.primary,
   },
   button: {
+    backgroundImage: "url(/assets/login-button.png)",
+    minWidth: 400,
     cursor: "pointer",
+    height: 100,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+
+    ":hover": {
+      filter: "drop-shadow( -5px -5px 5px #000 )",
+    },
   },
 }));
 
@@ -59,14 +68,10 @@ function Login() {
         </Grid.Col>
         <Grid.Col xs={12}>
           <Center>
-            <Image
+            <Box
               className={classes.button}
               onClick={() => handleSubmit()}
-              width="416"
-              height="71"
-              src="/assets/login-button.png"
-              alt="Login with Github"
-            />
+            ></Box>
           </Center>
         </Grid.Col>
       </Grid>
