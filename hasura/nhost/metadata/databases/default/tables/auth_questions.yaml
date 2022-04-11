@@ -1,0 +1,31 @@
+table:
+  name: questions
+  schema: auth
+array_relationships:
+- name: options
+  using:
+    manual_configuration:
+      column_mapping:
+        id: question_id
+      insertion_order: null
+      remote_table:
+        name: question_options
+        schema: auth
+- name: quiz
+  using:
+    manual_configuration:
+      column_mapping:
+        quiz_id: id
+      insertion_order: null
+      remote_table:
+        name: quizes
+        schema: auth
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - id
+    - name
+    - quiz_id
+    filter: {}
+  role: public

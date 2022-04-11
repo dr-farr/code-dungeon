@@ -1,0 +1,24 @@
+table:
+  name: question_options
+  schema: auth
+array_relationships:
+- name: question
+  using:
+    manual_configuration:
+      column_mapping:
+        question_id: id
+      insertion_order: null
+      remote_table:
+        name: questions
+        schema: auth
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - created_at
+    - id
+    - name
+    - question_id
+    - updated_at
+    filter: {}
+  role: public
