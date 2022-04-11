@@ -2,21 +2,25 @@ table:
   name: quizes
   schema: auth
 array_relationships:
-- name: questions
-  using:
-    foreign_key_constraint_on:
-      column: quiz_id
-      table:
-        name: questions
-        schema: auth
+  - name: questions
+    using:
+      foreign_key_constraint_on:
+        column: quiz_id
+        table:
+          name: questions
+          schema: auth
 select_permissions:
-- permission:
-    allow_aggregations: true
-    columns:
-    - created_at
-    - description
-    - difficulty
-    - id
-    - name
-    filter: {}
-  role: public
+  - permission:
+      allow_aggregations: true
+      columns:
+        - category
+        - type
+        - options
+        - updated_at
+        - created_at
+        - description
+        - difficulty
+        - id
+        - name
+      filter: {}
+    role: public

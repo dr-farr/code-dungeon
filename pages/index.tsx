@@ -60,9 +60,6 @@ const QuizesDataList = () => {
                       </Badge>
                     </Group>
 
-                    <Text size="sm" style={{ lineHeight: 1.5 }}>
-                      {item?.description}
-                    </Text>
                     <Link href={`/quiz/${item.id}`} passHref>
                       <Button
                         variant="light"
