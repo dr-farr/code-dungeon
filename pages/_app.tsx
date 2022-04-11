@@ -36,7 +36,9 @@ export default function App(props: AppProps) {
                 }}
               >
                 <QuizProvider>
-                  <Component {...pageProps} />
+                  <div className="app">
+                    <Component {...pageProps} />
+                  </div>
                 </QuizProvider>
               </MantineProvider>
             </NhostApolloProvider>
