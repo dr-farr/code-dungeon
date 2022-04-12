@@ -12,29 +12,12 @@ import {
 } from "@mantine/core";
 import nhost from "utils/nhost";
 import Link from "next/link";
-
-const UserButton = () => {
-  const theme = useMantineTheme();
-
-  return (
-    // <Box
-    //   sx={{
-    //     paddingTop: theme.spacing.sm,
-    //     borderTop: `1px solid ${
-    //       theme.colorScheme === "dark"
-    //         ? theme.colors.dark[4]
-    //         : theme.colors.gray[2]
-    //     }`,
-    //   }}
-    // >
-    <Button></Button>
-    // </Box>
-  );
-};
+import { useRouter } from "next/router";
 
 export default function User() {
   const user = useUserData();
   const theme = useMantineTheme();
+  const router = useRouter();
   return (
     <Menu
       control={
@@ -42,7 +25,7 @@ export default function User() {
           sx={{
             display: "block",
             width: "100%",
-            padding: theme.spacing.xs,
+            padding: theme.spacing.xl,
             borderRadius: theme.radius.sm,
             color:
               theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
@@ -75,17 +58,23 @@ export default function User() {
         </UnstyledButton>
       }
     >
-      <Menu.Item>
-        <Text size="sm" weight={500}>
-          Settings
-        </Text>
-      </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item
+        sx={{
+          padding: theme.spacing.xs,
+        }}
+      >
+        <Text weight={500}>Settings</Text>
+      </Menu.Item> */}
+      <Menu.Item
+        sx={{
+          padding: theme.spacing.xs,
+        }}
+      >
         <Text
           onClick={() => {
             nhost.auth.signOut();
+            router.push("/");
           }}
-          size="sm"
           weight={500}
         >
           Signout{" "}

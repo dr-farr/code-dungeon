@@ -24,7 +24,7 @@ import { useQuizCategories, useQuizes } from "controllers/quiz/hooks";
 import Link from "next/link";
 
 import Dashboard from "layout/app";
-import InfoText from "components/InfoText";
+import InfoText, { InfoScrollText } from "components/InfoText";
 import Image from "next/image";
 
 const useStyles = createStyles((theme) => ({
@@ -41,7 +41,8 @@ const useStyles = createStyles((theme) => ({
  * @returns {React.ReactElement}
  */
 const QuestList = () => {
-  const { loading, error, data } = useQuizCategories();
+  // const { loading, error, data } = useQuizCategories();
+  let data, loading, error;
   const { classes } = useStyles();
 
   if (loading) {
@@ -103,13 +104,15 @@ const QuestList = () => {
 export default function Home() {
   const user = useUserData();
 
+  if (user) {
+    return <InfoScrollText />;
+  }
+
   return user ? (
     <Dashboard>
       <Stack>
         <InfoText>
-          <Title order={3}>
-            Welcome to the Code Dungeon™ {user.displayName},{" "}
-          </Title>
+          <Title order={3}>Welcome to the Code Dungeon™ {},</Title>
           <Group>
             <Space />
             <Text>

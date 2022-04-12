@@ -8,6 +8,7 @@ import {
   Space,
   Title,
   createStyles,
+  Grid,
 } from "@mantine/core";
 import { NhostNextProvider } from "@nhost/nextjs";
 import { NhostApolloProvider } from "@nhost/react-apollo";
@@ -63,16 +64,15 @@ export default function App(props: AppProps) {
                 <QuizProvider>
                   <div className="app">
                     <Component {...pageProps} />
+                    <div>
+                      <Space h="xl" />
+
+                      <Center>
+                        <Title order={1}>🃟</Title>
+                      </Center>
+                      <Space h="md" />
+                    </div>
                   </div>
-                  <Container>
-                    <Space h="md" />
-                    <Center>
-                      <Title className={classes.root} order={5}>
-                        Made with 🂾 by us
-                      </Title>
-                    </Center>
-                    <Space h="md" />
-                  </Container>
                 </QuizProvider>
               </MantineProvider>
             </NhostApolloProvider>

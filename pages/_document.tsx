@@ -12,6 +12,16 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cinzel:wght@500;600&display=swap"
             rel="stylesheet"
           />
+          <meta property="og:title" content="Code Dungeon™" />
+          <meta
+            name="og:description"
+            content="Enter the Code Dungeon™ and discover the secrets of the code."
+          ></meta>
+
+          <meta
+            property="og:image"
+            content="https://user-images.githubusercontent.com/78376735/163042874-e017b4c7-104d-4d40-9e79-05b70b1499d0.jpg"
+          />
         </Head>
         <body>
           <Main />
