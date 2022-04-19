@@ -1,38 +1,48 @@
 table:
-  name: questions
   schema: auth
+  name: questions
+object_relationships:
+  - name: correct_option
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: question_options
+        insertion_order: null
+        column_mapping:
+          correct_option_id: id
 array_relationships:
-- name: options
-  using:
-    manual_configuration:
-      column_mapping:
-        id: question_id
-      insertion_order: null
-      remote_table:
-        name: question_options
-        schema: auth
-- name: quiz
-  using:
-    manual_configuration:
-      column_mapping:
-        quiz_id: id
-      insertion_order: null
-      remote_table:
-        name: quizes
-        schema: auth
+  - name: options
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: question_options
+        insertion_order: null
+        column_mapping:
+          id: question_id
+  - name: quiz
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: quizes
+        insertion_order: null
+        column_mapping:
+          quiz_id: id
 select_permissions:
-- permission:
-    allow_aggregations: true
-    columns:
-    - id
-    - name
-    - quiz_id
-    filter: {}
-  role: public
-- permission:
-    columns:
-    - id
-    - name
-    - quiz_id
-    filter: {}
-  role: user
+  - role: public
+    permission:
+      columns:
+        - id
+        - title
+        - quiz_id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - id
+        - title
+        - quiz_id
+      filter: {}

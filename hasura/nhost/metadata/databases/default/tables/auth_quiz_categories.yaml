@@ -1,30 +1,30 @@
 table:
-  name: quiz_categories
   schema: auth
+  name: quiz_categories
 array_relationships:
-- name: quizes
-  using:
-    foreign_key_constraint_on:
-      column: quiz_category_id
-      table:
-        name: quizes
-        schema: auth
+  - name: quizes
+    using:
+      foreign_key_constraint_on:
+        column: quiz_category_id
+        table:
+          schema: auth
+          name: quizes
 select_permissions:
-- permission:
-    allow_aggregations: true
-    columns:
-    - description
-    - image_url
-    - name
-    - id
-    filter: {}
-  role: public
-- permission:
-    allow_aggregations: true
-    columns:
-    - description
-    - id
-    - image_url
-    - name
-    filter: {}
-  role: user
+  - role: public
+    permission:
+      columns:
+        - description
+        - image_url
+        - title
+        - id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - description
+        - id
+        - image_url
+        - title
+      filter: {}
+      allow_aggregations: true
