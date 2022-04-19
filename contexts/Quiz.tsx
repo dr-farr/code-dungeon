@@ -9,6 +9,7 @@ interface IContextProps {
   countdownTime: any;
   startQuiz: any;
   loading: any;
+  setLoading: any;
   isQuizCompleted: any;
   resultData: any;
   replayQuiz: any;
@@ -37,6 +38,7 @@ const QuizContext = createContext<IContextProps>({
   isQuizStarted: undefined,
   countdownTime: undefined,
   startQuiz: undefined,
+  setLoading: undefined,
   loading: undefined,
   isQuizCompleted: undefined,
   resultData: undefined,
@@ -64,7 +66,7 @@ const QuizContext = createContext<IContextProps>({
 
 export const QuizProvider = ({ children }) => {
   const [_error, setError] = useState(null);
-  const [_loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
   const defaultCountdownTime = {
     hours: 0,
@@ -267,6 +269,7 @@ export const QuizProvider = ({ children }) => {
         error,
         countdownTime,
         loading,
+        setLoading,
         data,
         setData,
         quiz: quizData,

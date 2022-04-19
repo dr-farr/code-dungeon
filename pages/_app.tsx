@@ -24,6 +24,11 @@ const useStyles = createStyles((theme) => ({
     color: "white",
     fontSize: "1em",
   },
+  footer: {
+    position: "fixed",
+    left: "50%",
+    bottom: "0%",
+  },
 }));
 
 export default function App(props: AppProps) {
@@ -64,12 +69,10 @@ export default function App(props: AppProps) {
                 <QuizProvider>
                   <div className="app">
                     <Component {...pageProps} />
-                    <div>
+                    <div className={classes.footer}>
                       <Space h="xl" />
 
-                      <Center>
-                        <Title order={1}>🃟</Title>
-                      </Center>
+                      <Center>{/* <Title order={1}>🃟</Title> */}</Center>
                       <Space h="md" />
                     </div>
                   </div>

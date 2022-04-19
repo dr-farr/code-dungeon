@@ -10,9 +10,12 @@ import {
   Center,
   Paper,
   Text,
+  Box,
+  Transition,
+  Space,
 } from "@mantine/core";
 import he from "he";
-import Countdown from "components/Countdown";
+
 import { getLetter } from "utils/quiz";
 import QuizContext from "contexts/Quiz";
 
@@ -20,16 +23,108 @@ import { Slider, createStyles } from "@mantine/core";
 import clsx from "clsx";
 import Image from "next/image";
 import InfoText from "components/InfoText";
+import Loader from "components/Loader";
 
 const useStyles = createStyles((theme) => ({
-  option: {
-    cursor: "pointer",
-    "& > :hover": {
-      backgroundColor: theme.colors.primary,
+  root: {
+    position: "relative",
+    padding: "30px",
+  },
+
+  silver: {
+    fontSize: 14,
+    position: "relative",
+
+    textAlign: "center",
+    textShadow: "0 -1px 6px #000",
+    backgroundClip: "text",
+    color: "transparent",
+    backgroundImage:
+      "conic-gradient(#d7d7d7, #c3c3c3, #cccccc, #c6c6c6,	#d7d7d7, #c3c3c3, #cccccc, #c6c6c6,	#d7d7d7, #c3c3c3, #cccccc, #c6c6c6,	#d7d7d7, #c3c3c3, #cccccc, #c6c6c6)",
+    "& > h3": {
+      fontSize: "1.2rem",
+      display: "inline-block",
+      textTransform: "uppercase",
     },
   },
+
   active: {
-    backgroundColor: theme.colors.primary,
+    background: "radial-gradient(circle, #ec6a6a, #e52b2b)",
+    boxShadow: "0px 0 5px 5px rgba(255,255,255,0.2)",
+  },
+  option: {
+    margin: "10px auto",
+    width: 250,
+    letterSpacing: 2,
+    borderRadius: 8,
+    fontFamily: "Cinzel!important",
+    fontWeight: "bold",
+    color: "#eee46d",
+    fontSize: 24,
+
+    textShadow: "0 1px 3px #000",
+    textAlign: "center",
+    padding: 10,
+    background: "radial-gradient(circle, #8b0000, #8b0000)",
+    borderTop: "4px ridge #eee46d",
+    borderLeft: "4px groove #eee46d",
+    borderRight: "4px ridge #eee46d",
+    borderBottom: "4px groove #eee46d",
+    boxShadow: "inset 0px 0px 5px 3px rgba(1,1,1,0.3)",
+
+    ":hover": {
+      background: "radial-gradient(circle, #e52b2b, #8b0000)",
+      boxShadow: "0px 0 5px 5px rgba(255,255,255,0.2)",
+    },
+
+    "&:active": {
+      background: "radial-gradient(circle, #ec6a6a, #e52b2b)",
+      boxShadow: "0px 0 5px 5px rgba(255,255,255,0.2)",
+    },
+  },
+  opacity: {
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  title: {
+    fontFamily: "Cinzel!important",
+    fontWeight: "bold",
+    color: "#eee46d",
+    fontSize: 34,
+    textShadow: "0 1px 3px #000",
+    textAlign: "center",
+    padding: 10,
+    width: "100%",
+  },
+
+  container: {
+    minHeight: "60vh",
+  },
+
+  questionContainer: {
+    minHeight: "24vh",
+  },
+
+  button: {
+    backgroundImage: "url(/assets/proceed-button.png)",
+    minWidth: 200,
+    cursor: "pointer",
+    margin: "0 auto",
+    height: 100,
+    width: "20vw",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    position: "relative",
+
+    ":hover": {
+      filter: "drop-shadow( 0px 0px 5px #654321 )",
+    },
+  },
+  disabled: {
+    backgroundImage: "url(/assets/proceed-button-disabled.png)",
+    ":hover": {
+      filter: "none",
+      cursor: "default",
+    },
   },
 }));
 
@@ -46,6 +141,9 @@ const Quiz = () => {
     userSlectedAns,
     setCorrectAnswers,
     correctAnswers,
+    setLoading,
+    loading,
+    timer: { minutes, seconds },
   } = useContext(QuizContext);
 
   const questionData = data && data[questionIndex] ? data[questionIndex] : null;
@@ -59,6 +157,16 @@ const Quiz = () => {
   };
 
   const handleNext = () => {
+    if (!userSlectedAns) {
+      return;
+    }
+
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
     let point = 0;
     if (userSlectedAns === he.decode(questionData.correct_answer)) {
       point = 1;
@@ -87,72 +195,102 @@ const Quiz = () => {
   };
 
   return (
-    <Container>
-      <Group>
+    <Container classNames={classes.root}>
+      <Transition
+        mounted={loading}
+        transition="fade"
+        duration={400}
+        timingFunction="ease"
+      >
+        {(styles) => (
+          <div style={styles}>
+            <Loader />
+          </div>
+        )}
+      </Transition>
+      {!loading && (
         <Grid>
           <Grid.Col>
-            <Grid.Col xs={12}>
-              <Image
-                width="416"
-                height="71"
-                src="/assets/logo.png"
-                alt="Code Dungeon"
-              />
-            </Grid.Col>
-          </Grid.Col>
-          <Grid.Col>
-            <Grid>
-              <Grid.Col xs={6}>
+            <Grid align="center" justify="space-between">
+              <Grid.Col xs={2}>
                 <Center>
-                  {`Question No.${questionIndex + 1} of ${data?.length}`}
-                </Center>
+                  <Image
+                    width="246"
+                    height="41"
+                    src="/assets/logo.png"
+                    alt="Code Dungeon"
+                  />
+                </Center>{" "}
               </Grid.Col>
-              <Grid.Col xs={6}>
-                <Countdown />
+              <Grid.Col xs={7} className={classes.silver}>
+                <h3>{`Chamber ${questionIndex + 1} of ${data?.length}`}</h3>
+              </Grid.Col>
+              <Grid.Col xs={2} className={classes.silver}>
+                <h3>{minutes}</h3>
+                <h3>:{seconds}</h3>
               </Grid.Col>
             </Grid>
+            <Space h="xl" />
+            <Space h="xl" />
+            <Space h="xl" />
           </Grid.Col>
-          <Divider />
-          <Grid.Col>
-            <Title>
-              <b>{`Q. ${he.decode(questionData?.question)}`}</b>
-            </Title>
-          </Grid.Col>
-          <Grid.Col>
-            <Grid>
-              <InfoText>
-                {questionData.options.map((option, i) => {
-                  const letter = getLetter(i);
-                  const decodedOption = he.decode(option);
 
-                  return (
-                    <Grid.Col key={decodedOption} xs={6}>
-                      <Paper
-                        className={clsx(classes.option, {
-                          [classes.active]: userSlectedAns === decodedOption,
-                        })}
-                        onClick={() => handleItemClick(option)}
-                        shadow="xl"
-                        p="xl"
-                      >
-                        <Text> {decodedOption}</Text>
-                      </Paper>
-                    </Grid.Col>
-                  );
-                })}
-              </InfoText>
+          <Grid.Col>
+            <Grid className={classes.container}>
+              <Grid.Col className={classes.questionContainer}>
+                <InfoText className={classes.opacity}>
+                  <h1>
+                    <b className={classes.title}>{`Q. ${he.decode(
+                      questionData?.question
+                    )}`}</b>
+                  </h1>
+                </InfoText>
+              </Grid.Col>
+              <Grid.Col>
+                <InfoText>
+                  <Grid gutter={20}>
+                    {questionData.options.map((option, i) => {
+                      const letter = getLetter(i);
+                      const decodedOption = he.decode(option);
+
+                      return (
+                        <Grid.Col key={decodedOption} xs={6}>
+                          <Button
+                            size="xl"
+                            className={clsx(classes.option, {
+                              [classes.active]:
+                                userSlectedAns === decodedOption,
+                            })}
+                            onClick={() => handleItemClick(option)}
+                            fullWidth
+                          >
+                            {decodedOption}
+                          </Button>
+                        </Grid.Col>
+                      );
+                    })}
+                  </Grid>
+                </InfoText>
+              </Grid.Col>
             </Grid>
           </Grid.Col>
+
           <Divider />
+
           <Grid.Col>
-            <Button onClick={handleNext} disabled={!userSlectedAns}>
-              Proceed?
-            </Button>
+            <Center>
+              <Grid>
+                <Box
+                  className={clsx(classes.button, {
+                    [classes.disabled]: !userSlectedAns,
+                  })}
+                  onClick={handleNext}
+                ></Box>
+              </Grid>
+            </Center>
           </Grid.Col>
         </Grid>
-      </Group>
-
-      <br />
+      )}
     </Container>
   );
 };

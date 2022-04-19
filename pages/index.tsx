@@ -24,7 +24,7 @@ import { useQuizCategories, useQuizes } from "controllers/quiz/hooks";
 import Link from "next/link";
 
 import Dashboard from "layout/app";
-import InfoText, { InfoScrollText } from "components/InfoText";
+import InfoText, { InfoScroll } from "components/InfoText";
 import Image from "next/image";
 
 const useStyles = createStyles((theme) => ({
@@ -41,8 +41,8 @@ const useStyles = createStyles((theme) => ({
  * @returns {React.ReactElement}
  */
 const QuestList = () => {
-  // const { loading, error, data } = useQuizCategories();
-  let data, loading, error;
+  const { loading, error, data } = useQuizCategories();
+
   const { classes } = useStyles();
 
   if (loading) {
@@ -104,36 +104,41 @@ const QuestList = () => {
 export default function Home() {
   const user = useUserData();
 
-  if (user) {
-    return <InfoScrollText />;
-  }
-
   return user ? (
     <Dashboard>
-      <Stack>
-        <InfoText>
-          <Title order={3}>Welcome to the Code Dungeon™ {},</Title>
-          <Group>
-            <Space />
-            <Text>
-              Many have entered, few have left. The Code Dungeon is a place
-              where you can test your coding skills and see how far you can go.
-              You can try
-            </Text>
-            <Text>
-              Be careful on your journey, you can only take one quiz at a time.
-              Each quiz will take you further into the uncharted reaches of
-              abomination. You will neeed a tremendous courage to face the
-              unknown. You will need to be prepared. traps and pitfalls, as a
-              user you will need to run through many challenges, these
-              challenges will test your coding skills and knowledge.
-            </Text>
-            <Text> Be brave and have fun!</Text>
-          </Group>
-        </InfoText>
+      {!process.env.LIVE ? (
+        <InfoScroll>
+          <div>Greetings traveller,</div>
+          <Space h={1} />
+          <div>
+            The Code Dungeon is a place where you can test your skills to their
+            full potential. Many have walked through these hallowed chambers,
+            very few have managed to escape them. For those who did; none with
+            their sanity intact.
+            <br /> You will need to utilise many different types of skills to
+            survive down here.
+          </div>
+          <Space h={1} />
 
-        <QuestList />
-      </Stack>
+          <div>
+            Keep an eye on your email for when new quests become available.
+          </div>
+          <Space h={1} />
+          <div>Until we prevail,</div>
+          <Space h={1} />
+          <div> Samuel Von Jackson </div>
+        </InfoScroll>
+      ) : (
+        <Stack>
+          <InfoText>
+            <Title order={1}>
+              Welcome to the Code Dungeon™ {user?.displayName},
+            </Title>
+          </InfoText>
+
+          <QuestList />
+        </Stack>
+      )}
     </Dashboard>
   ) : (
     <Login />

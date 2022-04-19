@@ -13,10 +13,14 @@ import { useQuizCategory } from "controllers/quiz/hooks";
 import Image from "next/image";
 import Dashboard from "layout/app";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function QuestPage({ id }) {
   const { data, loading, error } = useQuizCategory({ id: { _eq: id } });
 
+  const router = useRouter();
+
+  console.log(error);
   if (!data) {
     return <Text>Nothing is real</Text>;
   }
@@ -41,14 +45,12 @@ function QuestPage({ id }) {
                 {data.quizes.map((quiz, idx) => {
                   return (
                     <Grid.Col key={idx}>
-                      <Card>
-                        <Link
-                          href="/quiz/[id]"
-                          as={`/quiz/${quiz.id}`}
-                          passHref
-                        >
-                          <Text>{quiz?.name}</Text>
-                        </Link>
+                      <Card
+                        onClick={() => {
+                          router.push(`/quiz/${quiz.id}`);
+                        }}
+                      >
+                        <Text>{quiz?.name}</Text>
                       </Card>
                     </Grid.Col>
                   );

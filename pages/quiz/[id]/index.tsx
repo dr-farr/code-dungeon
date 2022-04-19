@@ -1,13 +1,25 @@
 import React, { useContext, useState } from "react";
-import { Button, Text, Title, Loader, Grid } from "@mantine/core";
+import { Text, createStyles } from "@mantine/core";
 
 import QuizLayout from "layout/quiz";
 import QuizContext from "contexts/Quiz";
 
 import Quiz from "components/Quiz";
 
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundImage: "url(/assets/quiz-background.png)",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+    backgroundSize: "cover",
+    padding: "10vh",
+  },
+}));
+
 function QuizPage({ id }) {
   const { setQuizId } = useContext(QuizContext);
+  const { classes } = useStyles();
 
   if (!id) {
     return <Text>No quiz id</Text>;
@@ -17,7 +29,9 @@ function QuizPage({ id }) {
 
   return (
     <QuizLayout>
-      <Quiz />
+      <div className={classes.root}>
+        <Quiz />
+      </div>
     </QuizLayout>
   );
 }

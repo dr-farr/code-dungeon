@@ -8,82 +8,82 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
+import clsx from "clsx";
 import Dashboard from "layout/app";
 import Image from "next/image";
 import React, { Fragment } from "react";
 
 const useStyles = createStyles((theme) => ({
   root: {
-    backgroundColor: "rgba(0,0,0,0.7)",
+    backgroundColor: "rgba(0,0,0,0.5)",
     padding: "30px!important",
     borderRadius: 20,
   },
   scroll: {
+    position: "relative",
     backgroundImage: "url(/assets/scroll-background.png)",
-    backgroundPosition: "center",
+    backgroundPosition: "center top",
     maxWidth: "650px!important",
     margin: "auto",
     width: "70vw",
-    cursor: "pointer",
+
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
-    fontFamily: "Cinzel!important",
+    fontFamily: "Cinzel !important",
     color: "#654321",
     filter: "drop-shadow( 0px 0px 5px #000 )",
+
+    "& > * h1, & > * h2, ": {
+      fontFamily: "Cinzel!important",
+    },
   },
   overflow: {
-    maxHeight: "55vh",
+    maxHeight: "50%",
     height: "50%",
     overflow: "scroll",
-    margin: "20% 20%!important",
+    margin: "10vw",
     paddingTop: "5%",
   },
   text: {
     "& > *": {
-      fontFamily: theme.other.fontFamilySecondary,
-      fontSize: "1vh!important",
+      fontFamily: theme.other.fontFamilyPronounced,
     },
+  },
+  button: {
+    top: "-7vh",
+    position: "relative",
   },
 }));
 
-export default function InfoText({ children }) {
+export default function InfoText({
+  className,
+  children,
+}: {
+  className?: any;
+  children: any;
+}) {
   const { classes } = useStyles();
   return (
-    <Container className={classes.root}>
+    <Container className={clsx(classes.root, className)}>
       <div className={classes.text}>{children}</div>
     </Container>
   );
 }
 
-export const InfoScrollText = () => {
+export const InfoScroll = ({
+  children,
+  button,
+}: {
+  children: any;
+  button?: any;
+}) => {
   const { classes } = useStyles();
   return (
-    <Dashboard>
-      <Grid>
-        <Grid.Col className={classes.scroll} xs={12}>
-          <Stack className={classes.overflow}>
-            <div>Greetings traveller,</div>
-            <Space h={1} />
-            <div>
-              The Code Dungeon is a place where you can test your skills to
-              their full potential. Many have walked through these hallowed
-              chambers, very few have managed to escape them. For those who did;
-              none with their sanity intact.
-              <br /> You will need to utilise many different types of skills to
-              survive down here.
-            </div>
-            <Space h={1} />
-
-            <div>
-              Keep an eye on your email for when new quests become available.
-            </div>
-            <Space h={1} />
-            <div>Until we prevail,</div>
-            <Space h={1} />
-            <div> Samuel Von Jackson </div>
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </Dashboard>
+    <Grid>
+      <Grid.Col className={classes.scroll} xs={12}>
+        <Stack className={classes.overflow}>{children}</Stack>
+        <div className={classes.button}>{button && button}</div>
+      </Grid.Col>
+    </Grid>
   );
 };

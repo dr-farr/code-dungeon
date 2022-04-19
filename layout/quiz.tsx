@@ -11,18 +11,18 @@ import {
   createStyles,
   Grid,
   Group,
-  Loader,
+  Space,
   Title,
   Transition,
 } from "@mantine/core";
-
+import Loader from "components/Loader";
 import QuizContext from "contexts/Quiz";
 import Image from "next/image";
-import InfoText from "components/InfoText";
+
+import { InfoScroll } from "components/InfoText";
 
 const useStyles = createStyles((theme) => ({
   root: {
-    width: "50vw",
     position: "absolute",
     left: "50%",
     top: "50%",
@@ -31,63 +31,54 @@ const useStyles = createStyles((theme) => ({
       width: "100%",
     },
   },
+  category: {
+    width: "100%",
+    maxWidth: 400,
+    height: 50,
+    backgroundSize: "contain",
+    position: "absolute",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    top: "5%",
+    left: "50%",
+    transform: "translate(-50%, 5%)",
+    filter: "drop-shadow( 0px 0px 5px #654321 )",
+  },
   button: {
     backgroundImage: "url(/assets/start-quiz-button.png)",
-    minWidth: 400,
+    minWidth: 200,
     cursor: "pointer",
+
+    margin: 0,
     height: 100,
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
 
     ":hover": {
-      filter: "drop-shadow( -5px -5px 5px #000 )",
+      filter: "drop-shadow( 0px 0px 5px #654321 )",
     },
   },
 }));
 
-const Start = () => {
-  const { startQuiz, quiz } = useContext(QuizContext);
-
+export const QuizInfoScroll = ({ children, button }) => {
   const { classes } = useStyles();
-
   return (
     <Center>
       <Container className={classes.root}>
-        <Grid gutter="xl">
+        <Grid>
           <Grid.Col xs={12}>
-            <Image
-              width="416"
-              height="71"
-              src="/assets/logo.png"
-              alt="Code Dungeon"
-            />
+            <Center>
+              <Image
+                width="516"
+                height="91"
+                src="/assets/logo.png"
+                alt="Code Dungeon"
+              />
+            </Center>
+            <Space h="xl" />
           </Grid.Col>
           <Grid.Col xs={12}>
-            <InfoText>
-              <Group>
-                <Title order={1}>{quiz?.name}</Title>
-                <Title order={2}>{quiz?.description}</Title>
-              </Group>
-            </InfoText>
-          </Grid.Col>
-          <Grid.Col xs={12}>
-            <Transition
-              mounted={true}
-              transition="fade"
-              duration={400}
-              timingFunction="ease"
-            >
-              {(styles) => (
-                <div style={styles}>
-                  <Center>
-                    <Box
-                      className={classes.button}
-                      onClick={() => startQuiz()}
-                    ></Box>
-                  </Center>
-                </div>
-              )}
-            </Transition>
+            <InfoScroll button={button}>{children}</InfoScroll>
           </Grid.Col>
         </Grid>
       </Container>
@@ -103,7 +94,10 @@ const QuizLayout = ({ children }) => {
     resultData,
     countdownTime,
     startQuiz,
+    quiz,
+    setLoading,
   } = useContext(QuizContext);
+  const { classes } = useStyles();
 
   if (error) {
     return (
@@ -118,12 +112,39 @@ const QuizLayout = ({ children }) => {
     return <Title> game over</Title>;
   }
 
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    startQuiz();
+  };
+
   return (
     <Fragment>
       <main>
-        {!isQuizStarted && !isQuizCompleted && <Start />}
-        {isQuizStarted && children}
+        {!isQuizStarted && !isQuizCompleted && (
+          <QuizInfoScroll
+            button={
+              <Center>
+                <Box className={classes.button} onClick={handleClick}></Box>
+              </Center>
+            }
+          >
+            <Group>
+              <Box
+                className={classes.category}
+                style={{
+                  backgroundImage: `url(${quiz?.quiz_category?.image_url})`,
+                }}
+              ></Box>
 
+              <Title order={1}>{quiz?.name}</Title>
+              <Title order={2}>{quiz?.description}</Title>
+            </Group>
+          </QuizInfoScroll>
+        )}
+        {isQuizStarted && children}
         {isQuizCompleted && <Result {...resultData} />}
       </main>
     </Fragment>

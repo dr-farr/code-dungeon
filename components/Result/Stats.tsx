@@ -1,48 +1,54 @@
 import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
-import {
-  Header,
-  Button,
-  Group,
-  Title,
-  Stack,
-  createStyles,
-  Space,
-  Grid,
-} from "@mantine/core";
+import { Group, Title, createStyles, Center, Box } from "@mantine/core";
 
 import { calculateScore, calculateGrade, timeConverter } from "utils/quiz";
 import Link from "next/link";
 import QuizContext from "contexts/Quiz";
-import InfoText from "components/InfoText";
+import InfoText, { InfoScroll } from "components/InfoText";
+import { QuizInfoScroll } from "layout/quiz";
 
 const useStyles = createStyles((theme) => ({
   try: {
     backgroundImage: "url(/assets/try-button.png)",
-
     cursor: "pointer",
     height: 100,
+    width: 200,
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
+    maxWidth: 200,
 
     ":hover": {
-      filter: "drop-shadow( -5px -5px 5px #000 )",
+      filter: "drop-shadow( 0px 0px 5px #654321 )",
     },
   },
   more: {
     backgroundImage: "url(/assets/more-button.png)",
-
+    width: 200,
     cursor: "pointer",
     height: 100,
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
 
     ":hover": {
-      filter: "drop-shadow( -5px -5px 5px #000 )",
+      filter: "drop-shadow( 0px 0px 5px #654321 )",
     },
   },
+  category: {
+    width: "100%",
+    maxWidth: 400,
+    height: 50,
+    backgroundSize: "contain",
+    position: "absolute",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    top: "5%",
+    left: "50%",
+    transform: "translate(-50%, 5%)",
+    filter: "drop-shadow( 0px 0px 5px #654321 )",
+  },
   reset: {
-    backgroundImage: "url(/assets/proceed-button.png)",
+    filter: "drop-shadow( 0px 0px 5px #654321 )",
 
     cursor: "pointer",
     height: 100,
@@ -57,58 +63,50 @@ const useStyles = createStyles((theme) => ({
 
 const Stats = () => {
   const { classes } = useStyles();
-  const { numOfQuestions, correctAnswers, timeTaken, replayQuiz, resetQuiz } =
-    useContext(QuizContext);
+  const {
+    numOfQuestions,
+    correctAnswers,
+    timeTaken,
+    replayQuiz,
+    resetQuiz,
+    quiz,
+  } = useContext(QuizContext);
   const score = calculateScore(numOfQuestions, correctAnswers);
   const { grade, remarks } = calculateGrade(score);
   const { hours, minutes, seconds } = timeConverter(timeTaken);
 
   return (
-    <Fragment>
-      <InfoText>
-        <Stack>
-          <Title>{remarks}</Title>
-          <Title>Grade: {grade}</Title>
-          <Title>Total Questions: {numOfQuestions}</Title>
-          <Title>Correct Answers: {correctAnswers}</Title>
-          <Title>Your Score: {score}%</Title>
-          <Title>Passing Score: 60%</Title>
-          <Title>
-            Time Taken:{" "}
-            {`${Number(hours)}h ${Number(minutes)}m ${Number(seconds)}s`}
-          </Title>
-        </Stack>
-      </InfoText>
-      <Space h="xl" />
-      <InfoText>
-        <div style={{ marginTop: 35 }}>
-          <Grid>
-            <Grid.Col
-              xs={4}
-              className={classes.try}
-              onClick={replayQuiz}
-              style={{ marginRight: 15, marginBottom: 8 }}
-            />
-            <Grid.Col
-              xs={3}
-              className={classes.reset}
-              onClick={resetQuiz}
-              style={{ marginBottom: 8 }}
-            />
-            <Link href="/" passHref>
-              <Grid.Col
-                xs={4}
-                className={classes.more}
-                onClick={resetQuiz}
-                style={{ marginBottom: 8 }}
-              />
-            </Link>
-          </Grid>
+    <InfoScroll
+      button={
+        score < 75 ? (
+          <Center>
+            <div className={classes.try} onClick={replayQuiz} />
+          </Center>
+        ) : (
+          <Center>
+            <div className={classes.more} onClick={replayQuiz} />
+          </Center>
+        )
+      }
+    >
+      <Group>
+        <Box
+          className={classes.category}
+          style={{
+            backgroundImage: `url(${quiz?.quiz_category?.image_url})`,
+          }}
+        ></Box>
 
-          {/* <ShareButton /> */}
-        </div>
-      </InfoText>
-    </Fragment>
+        <h5>{remarks}</h5>
+        <h5>{` Escaped in ${Number(minutes)}:${Number()}s`}</h5>
+
+        <h5> Grade: {grade}</h5>
+        <h5>Total Questions: {numOfQuestions}</h5>
+        <h5>Correct Answers: {correctAnswers}</h5>
+        <h5>Your Score: {score}%</h5>
+        <h5>Passing Score: 60%</h5>
+      </Group>
+    </InfoScroll>
   );
 };
 
