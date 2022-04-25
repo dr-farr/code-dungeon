@@ -10,6 +10,8 @@ import {
   createStyles,
   Grid,
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
+
 import { NhostNextProvider } from "@nhost/nextjs";
 import { NhostApolloProvider } from "@nhost/react-apollo";
 
@@ -17,6 +19,7 @@ import { AppProps } from "next/app";
 import nhost from "utils/nhost";
 import { Fragment } from "react";
 import { QuizProvider } from "contexts/Quiz";
+import { useUserData } from "@nhost/nextjs";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -68,7 +71,9 @@ export default function App(props: AppProps) {
               >
                 <QuizProvider>
                   <div className="app">
-                    <Component {...pageProps} />
+                    <NotificationsProvider>
+                      <Component {...pageProps} />
+                    </NotificationsProvider>
                     <div className={classes.footer}>
                       <Space h="xl" />
 

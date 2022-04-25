@@ -18,6 +18,7 @@ export default function User() {
   const user = useUserData();
   const theme = useMantineTheme();
   const router = useRouter();
+
   return (
     <Menu
       control={

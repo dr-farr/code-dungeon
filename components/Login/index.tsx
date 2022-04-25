@@ -12,6 +12,8 @@ import Image from "next/image";
 
 import nhost from "utils/nhost";
 
+import { useProviderLink } from "@nhost/react";
+
 const useStyles = createStyles((theme) => ({
   root: {
     width: "50vw",
@@ -42,6 +44,7 @@ const useStyles = createStyles((theme) => ({
 
 function Login() {
   const { classes } = useStyles();
+  const { github } = useProviderLink();
   const handleSubmit = async () => {
     const signInResponse = await nhost.auth.signIn({
       provider: "github",
