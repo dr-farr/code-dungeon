@@ -1,17 +1,37 @@
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { useDefaultRole, useUserData } from "@nhost/react";
 import { useAuthQuery } from "@nhost/react-apollo";
 import { useAccessToken } from "@nhost/nextjs";
-import nhost from "utils/nhost";
+import { DocumentNode } from "graphql";
 import {
+  GET_QUIZ,
   GET_QUIZES,
   COMPLETE_QUIZ,
   GET_QUIZ_CATEGORIES,
   GET_QUIZ_CATEGORY,
-  CREATE_QUIZ,
   INSERT_QUIZ,
   INSERT_QUESTION_OPTIONS,
+  DELETE_QUESTION_OPTION,
   INSERT_QUESTIONS,
+  GET_BASIC_QUIZ,
+  GET_COMPLETED_QUIZES,
 } from "./graphql";
+
+const useRoleMutation = (node: DocumentNode) => {
+  const role = useDefaultRole();
+  const token = useAccessToken();
+  const [mutation] = useMutation(node, {
+    context: {
+      headers: {
+        "x-hasura-role": role,
+        Authorization: "Bearer " + token,
+      },
+    },
+  });
+  return (variables) => {
+    return mutation({ variables });
+  };
+};
 
 export function useQuizCategories() {
   const token = useAccessToken();
@@ -30,27 +50,16 @@ export function useQuizCategories() {
   };
 }
 
-export function useQuizCategory(
-  //@ts-ignore
-  where?,
-  //@ts-ignore
-  orderBy?,
-  //@ts-ignore
-  take?,
-  //@ts-ignore
-  skip?
-) {
+export function useQuizCategory(id) {
   const token = useAccessToken();
+  const role = useDefaultRole();
   const query = useAuthQuery(GET_QUIZ_CATEGORY, {
     variables: {
-      where,
-      orderBy,
-      take,
-      skip,
+      id,
     },
     context: {
       headers: {
-        "x-hasura-role": "admin_user",
+        "x-hasura-role": role,
         Authorization: "Bearer " + token,
       },
     },
@@ -58,32 +67,31 @@ export function useQuizCategory(
 
   return {
     ...query,
-    data: query?.data?.auth_quiz_categories[0] ?? null,
+    data: query?.data?.auth_quiz_categories_by_pk ?? null,
   };
 }
 
-export function useQuiz(
-  //@ts-ignore
-  where?,
-  //@ts-ignore
-  orderBy?,
-  //@ts-ignore
-  take?,
-  //@ts-ignore
-  skip?
-) {
-  const query = useAuthQuery(GET_QUIZES, {
-    variables: {
-      where,
-      orderBy,
-      take,
-      skip,
-    },
-  });
+export function useQuiz(id) {
+  const token = useAccessToken();
+  const role = useDefaultRole();
+  const query = useAuthQuery(
+    role !== "admin_user" ? GET_QUIZ : GET_BASIC_QUIZ,
+    {
+      variables: {
+        id,
+      },
+      context: {
+        headers: {
+          "x-hasura-role": role,
+          Authorization: "Bearer " + token,
+        },
+      },
+    }
+  );
 
   return {
     ...query,
-    data: query?.data?.auth_quizes[0] ?? null,
+    data: query?.data?.auth_quizes_by_pk ?? null,
   };
 }
 
@@ -96,6 +104,7 @@ export function useQuizes( //@ts-ignore
   //@ts-ignore
   skip?
 ) {
+  const role = useDefaultRole();
   const token = useAccessToken();
   const query = useAuthQuery(GET_QUIZES, {
     variables: {
@@ -106,7 +115,7 @@ export function useQuizes( //@ts-ignore
     },
     context: {
       headers: {
-        "X-Hasura-Role": "admin_user",
+        "X-Hasura-Role": role,
         Authorization: "Bearer " + token,
       },
     },
@@ -119,19 +128,81 @@ export function useQuizes( //@ts-ignore
 }
 
 export function useCompleteQuiz() {
-  const [completeQuiz] = useMutation(COMPLETE_QUIZ);
+  const role = useDefaultRole();
+  const token = useAccessToken();
+  const [completeQuiz] = useMutation(COMPLETE_QUIZ, {
+    context: {
+      headers: {
+        "X-Hasura-Role": role,
+        Authorization: "Bearer " + token,
+      },
+    },
+  });
+  const user = useUserData();
+
   return (variables) => {
     console.log(variables);
+    const correctAnswerCount = variables.data.answers.data.map(
+      ({ option_id }) => option_id
+    );
+    console.log(correctAnswerCount);
+    variables.data.user_id = user?.id;
+    variables.data.completed_at = new Date();
+    variables.data.created_at = new Date();
+    variables.data.updated_at = new Date();
+
     return completeQuiz({ variables });
+  };
+}
+
+export function useUserQuizes(
+  where?,
+
+  orderBy?,
+
+  limit?,
+
+  offset?
+) {
+  const token = useAccessToken();
+  const role = useDefaultRole();
+  const user = useUserData();
+  const query = useAuthQuery(GET_COMPLETED_QUIZES, {
+    variables: {
+      distinct_on: "score",
+      where: {
+        ...where,
+        user_id: { _eq: user?.id },
+        quiz: { id: { _is_null: false } },
+      },
+      orderBy: {
+        ...orderBy,
+        order_by: { grade: "desc_nulls_last" },
+      },
+      limit: limit ?? 1,
+      offset,
+    },
+    context: {
+      headers: {
+        "x-hasura-role": role,
+        Authorization: "Bearer " + token,
+      },
+    },
+  });
+
+  return {
+    ...query,
+    data: query?.data?.auth_user_quizes ?? null,
   };
 }
 
 export function useInsertQuiz() {
   const token = useAccessToken();
+  const role = useDefaultRole();
   const [insertQuiz] = useMutation(INSERT_QUIZ, {
     context: {
       headers: {
-        "x-hasura-role": "admin_user",
+        "x-hasura-role": role,
         Authorization: "Bearer " + token,
       },
     },
@@ -143,10 +214,11 @@ export function useInsertQuiz() {
 
 export function useInsertQuestions() {
   const token = useAccessToken();
+  const role = useDefaultRole();
   const [insertQuestions] = useMutation(INSERT_QUESTIONS, {
     context: {
       headers: {
-        "x-hasura-role": "admin_user",
+        "x-hasura-role": role,
         Authorization: "Bearer " + token,
       },
     },
@@ -156,12 +228,29 @@ export function useInsertQuestions() {
   };
 }
 
+export function useDeleteQuestionOptions() {
+  const token = useAccessToken();
+  const role = useDefaultRole();
+  const [deleteQuestionOption] = useMutation(DELETE_QUESTION_OPTION, {
+    context: {
+      headers: {
+        "x-hasura-role": role,
+        Authorization: "Bearer " + token,
+      },
+    },
+  });
+  return (id) => {
+    return deleteQuestionOption({ variables: { id } });
+  };
+}
+
 export function useInsertQuestionOptions() {
   const token = useAccessToken();
+  const role = useDefaultRole();
   const [insertQuestionOptions] = useMutation(INSERT_QUESTION_OPTIONS, {
     context: {
       headers: {
-        "x-hasura-role": "admin_user",
+        "x-hasura-role": role,
         Authorization: "Bearer " + token,
       },
     },

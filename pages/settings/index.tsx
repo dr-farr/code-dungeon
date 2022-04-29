@@ -6,14 +6,18 @@ import {
   Group,
   Space,
   TextInput,
+  Text,
   Title,
+  Paper,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import InfoText from "components/InfoText";
+import { useUserQuizes } from "controllers/quiz/hooks";
 import Dashboard from "layout/app";
-import React from "react";
+import Link from "next/link";
+import React, { Fragment } from "react";
 
-export default function SettingsPage() {
+const Email = () => {
   const form = useForm({
     initialValues: {
       email: "",
@@ -23,31 +27,61 @@ export default function SettingsPage() {
       email: (value) => (/^\\S+@\\S+$/.test(value) ? null : "Invalid email"),
     },
   });
+
+  return (
+    <InfoText>
+      <Title>Email Settings</Title>
+      <Box sx={{ maxWidth: 300 }} mx="auto">
+        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+          <TextInput
+            required
+            label="Email"
+            placeholder="your@email.com"
+            {...form.getInputProps("email")}
+          />
+          <Checkbox
+            mt="md"
+            label="I agree to sell my privacy"
+            {...form.getInputProps("termsOfService", { type: "checkbox" })}
+          />
+          <Group position="right" mt="md">
+            <Button type="submit">Submit</Button>
+          </Group>
+        </form>
+      </Box>
+    </InfoText>
+  );
+};
+const Quizes = () => {
+  const { data } = useUserQuizes();
+  console.log(data);
+  return (
+    <InfoText>
+      <Title>Progress</Title>
+
+      {data?.map((quiz, idx) => {
+        return (
+          <Link key={idx} href={`/quiz/${quiz.id}`} passHref>
+            <Paper>
+              <Fragment>
+                {quiz?.quiz?.quiz_category?.title} - {quiz?.quiz?.title}- Grade{" "}
+                {quiz?.grade}
+              </Fragment>
+            </Paper>
+          </Link>
+        );
+      })}
+    </InfoText>
+  );
+};
+
+export default function SettingsPage() {
   return (
     <Dashboard>
       <Container>
-        <InfoText>
-          <Title>Email Settings</Title>
-          <Box sx={{ maxWidth: 300 }} mx="auto">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
-              <TextInput
-                required
-                label="Email"
-                placeholder="your@email.com"
-                {...form.getInputProps("email")}
-              />
-              <Checkbox
-                mt="md"
-                label="I agree to sell my privacy"
-                {...form.getInputProps("termsOfService", { type: "checkbox" })}
-              />
-              <Group position="right" mt="md">
-                <Button type="submit">Submit</Button>
-              </Group>
-            </form>
-          </Box>
-        </InfoText>
+        <Email />
         <Space h="xl" />
+        <Quizes />
       </Container>
     </Dashboard>
   );

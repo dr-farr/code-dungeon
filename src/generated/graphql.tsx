@@ -15,6 +15,7 @@ export type Scalars = {
   Float: number;
   citext: any;
   jsonb: any;
+  numeric: any;
   timestamptz: any;
   uuid: any;
 };
@@ -82,7 +83,13 @@ export type String_Comparison_Exp = {
 export type AuthProviderRequests = {
   __typename?: 'authProviderRequests';
   id: Scalars['uuid'];
-  redirectUrl: Scalars['String'];
+  options?: Maybe<Scalars['jsonb']>;
+};
+
+
+/** columns and relationships of "auth.provider_requests" */
+export type AuthProviderRequestsOptionsArgs = {
+  path?: InputMaybe<Scalars['String']>;
 };
 
 /** aggregated selection of "auth.provider_requests" */
@@ -107,13 +114,18 @@ export type AuthProviderRequests_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type AuthProviderRequests_Append_Input = {
+  options?: InputMaybe<Scalars['jsonb']>;
+};
+
 /** Boolean expression to filter rows from the table "auth.provider_requests". All fields are combined with a logical 'AND'. */
 export type AuthProviderRequests_Bool_Exp = {
   _and?: InputMaybe<Array<AuthProviderRequests_Bool_Exp>>;
   _not?: InputMaybe<AuthProviderRequests_Bool_Exp>;
   _or?: InputMaybe<Array<AuthProviderRequests_Bool_Exp>>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  redirectUrl?: InputMaybe<String_Comparison_Exp>;
+  options?: InputMaybe<Jsonb_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "auth.provider_requests" */
@@ -122,24 +134,37 @@ export enum AuthProviderRequests_Constraint {
   ProviderRequestsPkey = 'provider_requests_pkey'
 }
 
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type AuthProviderRequests_Delete_At_Path_Input = {
+  options?: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type AuthProviderRequests_Delete_Elem_Input = {
+  options?: InputMaybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type AuthProviderRequests_Delete_Key_Input = {
+  options?: InputMaybe<Scalars['String']>;
+};
+
 /** input type for inserting data into table "auth.provider_requests" */
 export type AuthProviderRequests_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  options?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** aggregate max on columns */
 export type AuthProviderRequests_Max_Fields = {
   __typename?: 'authProviderRequests_max_fields';
   id?: Maybe<Scalars['uuid']>;
-  redirectUrl?: Maybe<Scalars['String']>;
 };
 
 /** aggregate min on columns */
 export type AuthProviderRequests_Min_Fields = {
   __typename?: 'authProviderRequests_min_fields';
   id?: Maybe<Scalars['uuid']>;
-  redirectUrl?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "auth.provider_requests" */
@@ -161,7 +186,7 @@ export type AuthProviderRequests_On_Conflict = {
 /** Ordering options when selecting data from "auth.provider_requests". */
 export type AuthProviderRequests_Order_By = {
   id?: InputMaybe<Order_By>;
-  redirectUrl?: InputMaybe<Order_By>;
+  options?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: authProviderRequests */
@@ -169,18 +194,23 @@ export type AuthProviderRequests_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type AuthProviderRequests_Prepend_Input = {
+  options?: InputMaybe<Scalars['jsonb']>;
+};
+
 /** select columns of table "auth.provider_requests" */
 export enum AuthProviderRequests_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  RedirectUrl = 'redirectUrl'
+  Options = 'options'
 }
 
 /** input type for updating data in table "auth.provider_requests" */
 export type AuthProviderRequests_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>;
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  options?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** update columns of table "auth.provider_requests" */
@@ -188,7 +218,7 @@ export enum AuthProviderRequests_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  RedirectUrl = 'redirectUrl'
+  Options = 'options'
 }
 
 /** columns and relationships of "auth.providers" */
@@ -1220,6 +1250,124 @@ export enum Auth_Completed_Quizes_Update_Column {
   UserId = 'user_id'
 }
 
+/** columns and relationships of "auth.difficulties" */
+export type Auth_Difficulties = {
+  __typename?: 'auth_difficulties';
+  title: Scalars['String'];
+};
+
+/** aggregated selection of "auth.difficulties" */
+export type Auth_Difficulties_Aggregate = {
+  __typename?: 'auth_difficulties_aggregate';
+  aggregate?: Maybe<Auth_Difficulties_Aggregate_Fields>;
+  nodes: Array<Auth_Difficulties>;
+};
+
+/** aggregate fields of "auth.difficulties" */
+export type Auth_Difficulties_Aggregate_Fields = {
+  __typename?: 'auth_difficulties_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Auth_Difficulties_Max_Fields>;
+  min?: Maybe<Auth_Difficulties_Min_Fields>;
+};
+
+
+/** aggregate fields of "auth.difficulties" */
+export type Auth_Difficulties_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Auth_Difficulties_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "auth.difficulties". All fields are combined with a logical 'AND'. */
+export type Auth_Difficulties_Bool_Exp = {
+  _and?: InputMaybe<Array<Auth_Difficulties_Bool_Exp>>;
+  _not?: InputMaybe<Auth_Difficulties_Bool_Exp>;
+  _or?: InputMaybe<Array<Auth_Difficulties_Bool_Exp>>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "auth.difficulties" */
+export enum Auth_Difficulties_Constraint {
+  /** unique or primary key constraint */
+  DifficultiesPkey = 'difficulties_pkey'
+}
+
+export enum Auth_Difficulties_Enum {
+  Easy = 'EASY',
+  Hard = 'HARD',
+  Medium = 'MEDIUM',
+  VeryHard = 'VERY_HARD'
+}
+
+/** Boolean expression to compare columns of type "auth_difficulties_enum". All fields are combined with logical 'AND'. */
+export type Auth_Difficulties_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Auth_Difficulties_Enum>;
+  _in?: InputMaybe<Array<Auth_Difficulties_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Auth_Difficulties_Enum>;
+  _nin?: InputMaybe<Array<Auth_Difficulties_Enum>>;
+};
+
+/** input type for inserting data into table "auth.difficulties" */
+export type Auth_Difficulties_Insert_Input = {
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Auth_Difficulties_Max_Fields = {
+  __typename?: 'auth_difficulties_max_fields';
+  title?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Auth_Difficulties_Min_Fields = {
+  __typename?: 'auth_difficulties_min_fields';
+  title?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "auth.difficulties" */
+export type Auth_Difficulties_Mutation_Response = {
+  __typename?: 'auth_difficulties_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Auth_Difficulties>;
+};
+
+/** on_conflict condition type for table "auth.difficulties" */
+export type Auth_Difficulties_On_Conflict = {
+  constraint: Auth_Difficulties_Constraint;
+  update_columns?: Array<Auth_Difficulties_Update_Column>;
+  where?: InputMaybe<Auth_Difficulties_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "auth.difficulties". */
+export type Auth_Difficulties_Order_By = {
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: auth_difficulties */
+export type Auth_Difficulties_Pk_Columns_Input = {
+  title: Scalars['String'];
+};
+
+/** select columns of table "auth.difficulties" */
+export enum Auth_Difficulties_Select_Column {
+  /** column name */
+  Title = 'title'
+}
+
+/** input type for updating data in table "auth.difficulties" */
+export type Auth_Difficulties_Set_Input = {
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "auth.difficulties" */
+export enum Auth_Difficulties_Update_Column {
+  /** column name */
+  Title = 'title'
+}
+
 /** columns and relationships of "auth.question_options" */
 export type Auth_Question_Options = {
   __typename?: 'auth_question_options';
@@ -1305,6 +1453,8 @@ export type Auth_Question_Options_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.question_options" */
 export enum Auth_Question_Options_Constraint {
+  /** unique or primary key constraint */
+  QuestionOptionsIdTitleKey = 'question_options_id_title_key',
   /** unique or primary key constraint */
   QuestionOptionsPkey = 'question_options_pkey'
 }
@@ -1451,6 +1601,7 @@ export type Auth_Questions = {
   options: Array<Auth_Question_Options>;
   /** An aggregate relationship */
   options_aggregate: Auth_Question_Options_Aggregate;
+  order?: Maybe<Scalars['numeric']>;
   /** An array relationship */
   quiz: Array<Auth_Quizes>;
   /** An aggregate relationship */
@@ -1535,9 +1686,17 @@ export type Auth_Questions_Aggregate = {
 /** aggregate fields of "auth.questions" */
 export type Auth_Questions_Aggregate_Fields = {
   __typename?: 'auth_questions_aggregate_fields';
+  avg?: Maybe<Auth_Questions_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Auth_Questions_Max_Fields>;
   min?: Maybe<Auth_Questions_Min_Fields>;
+  stddev?: Maybe<Auth_Questions_Stddev_Fields>;
+  stddev_pop?: Maybe<Auth_Questions_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Auth_Questions_Stddev_Samp_Fields>;
+  sum?: Maybe<Auth_Questions_Sum_Fields>;
+  var_pop?: Maybe<Auth_Questions_Var_Pop_Fields>;
+  var_samp?: Maybe<Auth_Questions_Var_Samp_Fields>;
+  variance?: Maybe<Auth_Questions_Variance_Fields>;
 };
 
 
@@ -1549,9 +1708,17 @@ export type Auth_Questions_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "auth.questions" */
 export type Auth_Questions_Aggregate_Order_By = {
+  avg?: InputMaybe<Auth_Questions_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Auth_Questions_Max_Order_By>;
   min?: InputMaybe<Auth_Questions_Min_Order_By>;
+  stddev?: InputMaybe<Auth_Questions_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Auth_Questions_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Auth_Questions_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Auth_Questions_Sum_Order_By>;
+  var_pop?: InputMaybe<Auth_Questions_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Auth_Questions_Var_Samp_Order_By>;
+  variance?: InputMaybe<Auth_Questions_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "auth.questions" */
@@ -1559,6 +1726,17 @@ export type Auth_Questions_Arr_Rel_Insert_Input = {
   data: Array<Auth_Questions_Insert_Input>;
   /** upsert condition */
   on_conflict?: InputMaybe<Auth_Questions_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Auth_Questions_Avg_Fields = {
+  __typename?: 'auth_questions_avg_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "auth.questions" */
+export type Auth_Questions_Avg_Order_By = {
+  order?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "auth.questions". All fields are combined with a logical 'AND'. */
@@ -1572,6 +1750,7 @@ export type Auth_Questions_Bool_Exp = {
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   options?: InputMaybe<Auth_Question_Options_Bool_Exp>;
+  order?: InputMaybe<Numeric_Comparison_Exp>;
   quiz?: InputMaybe<Auth_Quizes_Bool_Exp>;
   quiz_id?: InputMaybe<Uuid_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
@@ -1585,6 +1764,11 @@ export enum Auth_Questions_Constraint {
   QuestionsPkey = 'questions_pkey'
 }
 
+/** input type for incrementing numeric columns in table "auth.questions" */
+export type Auth_Questions_Inc_Input = {
+  order?: InputMaybe<Scalars['numeric']>;
+};
+
 /** input type for inserting data into table "auth.questions" */
 export type Auth_Questions_Insert_Input = {
   correct_option?: InputMaybe<Auth_Question_Options_Obj_Rel_Insert_Input>;
@@ -1593,6 +1777,7 @@ export type Auth_Questions_Insert_Input = {
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   options?: InputMaybe<Auth_Question_Options_Arr_Rel_Insert_Input>;
+  order?: InputMaybe<Scalars['numeric']>;
   quiz?: InputMaybe<Auth_Quizes_Arr_Rel_Insert_Input>;
   quiz_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
@@ -1607,6 +1792,7 @@ export type Auth_Questions_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['numeric']>;
   quiz_id?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -1619,6 +1805,7 @@ export type Auth_Questions_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  order?: InputMaybe<Order_By>;
   quiz_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
@@ -1632,6 +1819,7 @@ export type Auth_Questions_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['numeric']>;
   quiz_id?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -1644,6 +1832,7 @@ export type Auth_Questions_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  order?: InputMaybe<Order_By>;
   quiz_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
@@ -1674,6 +1863,7 @@ export type Auth_Questions_Order_By = {
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   options_aggregate?: InputMaybe<Auth_Question_Options_Aggregate_Order_By>;
+  order?: InputMaybe<Order_By>;
   quiz_aggregate?: InputMaybe<Auth_Quizes_Aggregate_Order_By>;
   quiz_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
@@ -1697,6 +1887,8 @@ export enum Auth_Questions_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Order = 'order',
+  /** column name */
   QuizId = 'quiz_id',
   /** column name */
   Title = 'title',
@@ -1712,10 +1904,55 @@ export type Auth_Questions_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  order?: InputMaybe<Scalars['numeric']>;
   quiz_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Auth_Questions_Stddev_Fields = {
+  __typename?: 'auth_questions_stddev_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "auth.questions" */
+export type Auth_Questions_Stddev_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Auth_Questions_Stddev_Pop_Fields = {
+  __typename?: 'auth_questions_stddev_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "auth.questions" */
+export type Auth_Questions_Stddev_Pop_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Auth_Questions_Stddev_Samp_Fields = {
+  __typename?: 'auth_questions_stddev_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "auth.questions" */
+export type Auth_Questions_Stddev_Samp_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Auth_Questions_Sum_Fields = {
+  __typename?: 'auth_questions_sum_fields';
+  order?: Maybe<Scalars['numeric']>;
+};
+
+/** order by sum() on columns of table "auth.questions" */
+export type Auth_Questions_Sum_Order_By = {
+  order?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "auth.questions" */
@@ -1729,6 +1966,8 @@ export enum Auth_Questions_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Order = 'order',
+  /** column name */
   QuizId = 'quiz_id',
   /** column name */
   Title = 'title',
@@ -1737,6 +1976,39 @@ export enum Auth_Questions_Update_Column {
   /** column name */
   UpdatedAt = 'updated_at'
 }
+
+/** aggregate var_pop on columns */
+export type Auth_Questions_Var_Pop_Fields = {
+  __typename?: 'auth_questions_var_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "auth.questions" */
+export type Auth_Questions_Var_Pop_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Auth_Questions_Var_Samp_Fields = {
+  __typename?: 'auth_questions_var_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "auth.questions" */
+export type Auth_Questions_Var_Samp_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Auth_Questions_Variance_Fields = {
+  __typename?: 'auth_questions_variance_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "auth.questions" */
+export type Auth_Questions_Variance_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
 
 /** columns and relationships of "auth.quiz_categories" */
 export type Auth_Quiz_Categories = {
@@ -1940,8 +2212,9 @@ export type Auth_Quizes = {
   __typename?: 'auth_quizes';
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  difficulty?: Maybe<Scalars['Int']>;
+  difficulty?: Maybe<Auth_Difficulties_Enum>;
   id: Scalars['uuid'];
+  published: Scalars['Boolean'];
   /** An array relationship */
   questions: Array<Auth_Questions>;
   /** An aggregate relationship */
@@ -1949,9 +2222,12 @@ export type Auth_Quizes = {
   /** An object relationship */
   quiz_category?: Maybe<Auth_Quiz_Categories>;
   quiz_category_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  quiz_user?: Maybe<Users>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 
@@ -1996,17 +2272,9 @@ export type Auth_Quizes_Aggregate = {
 /** aggregate fields of "auth.quizes" */
 export type Auth_Quizes_Aggregate_Fields = {
   __typename?: 'auth_quizes_aggregate_fields';
-  avg?: Maybe<Auth_Quizes_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Auth_Quizes_Max_Fields>;
   min?: Maybe<Auth_Quizes_Min_Fields>;
-  stddev?: Maybe<Auth_Quizes_Stddev_Fields>;
-  stddev_pop?: Maybe<Auth_Quizes_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Auth_Quizes_Stddev_Samp_Fields>;
-  sum?: Maybe<Auth_Quizes_Sum_Fields>;
-  var_pop?: Maybe<Auth_Quizes_Var_Pop_Fields>;
-  var_samp?: Maybe<Auth_Quizes_Var_Samp_Fields>;
-  variance?: Maybe<Auth_Quizes_Variance_Fields>;
 };
 
 
@@ -2018,17 +2286,9 @@ export type Auth_Quizes_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "auth.quizes" */
 export type Auth_Quizes_Aggregate_Order_By = {
-  avg?: InputMaybe<Auth_Quizes_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Auth_Quizes_Max_Order_By>;
   min?: InputMaybe<Auth_Quizes_Min_Order_By>;
-  stddev?: InputMaybe<Auth_Quizes_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Auth_Quizes_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Auth_Quizes_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Auth_Quizes_Sum_Order_By>;
-  var_pop?: InputMaybe<Auth_Quizes_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Auth_Quizes_Var_Samp_Order_By>;
-  variance?: InputMaybe<Auth_Quizes_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "auth.quizes" */
@@ -2038,17 +2298,6 @@ export type Auth_Quizes_Arr_Rel_Insert_Input = {
   on_conflict?: InputMaybe<Auth_Quizes_On_Conflict>;
 };
 
-/** aggregate avg on columns */
-export type Auth_Quizes_Avg_Fields = {
-  __typename?: 'auth_quizes_avg_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by avg() on columns of table "auth.quizes" */
-export type Auth_Quizes_Avg_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
-
 /** Boolean expression to filter rows from the table "auth.quizes". All fields are combined with a logical 'AND'. */
 export type Auth_Quizes_Bool_Exp = {
   _and?: InputMaybe<Array<Auth_Quizes_Bool_Exp>>;
@@ -2056,41 +2305,40 @@ export type Auth_Quizes_Bool_Exp = {
   _or?: InputMaybe<Array<Auth_Quizes_Bool_Exp>>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
-  difficulty?: InputMaybe<Int_Comparison_Exp>;
+  difficulty?: InputMaybe<Auth_Difficulties_Enum_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  published?: InputMaybe<Boolean_Comparison_Exp>;
   questions?: InputMaybe<Auth_Questions_Bool_Exp>;
   quiz_category?: InputMaybe<Auth_Quiz_Categories_Bool_Exp>;
   quiz_category_id?: InputMaybe<Uuid_Comparison_Exp>;
+  quiz_user?: InputMaybe<Users_Bool_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "auth.quizes" */
 export enum Auth_Quizes_Constraint {
   /** unique or primary key constraint */
-  QuizesPkey = 'quizes_pkey',
-  /** unique or primary key constraint */
-  QuizesYdKey = 'quizes_yd_key'
+  QuizesPkey = 'quizes_pkey'
 }
-
-/** input type for incrementing numeric columns in table "auth.quizes" */
-export type Auth_Quizes_Inc_Input = {
-  difficulty?: InputMaybe<Scalars['Int']>;
-};
 
 /** input type for inserting data into table "auth.quizes" */
 export type Auth_Quizes_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   description?: InputMaybe<Scalars['String']>;
-  difficulty?: InputMaybe<Scalars['Int']>;
+  difficulty?: InputMaybe<Auth_Difficulties_Enum>;
   id?: InputMaybe<Scalars['uuid']>;
+  published?: InputMaybe<Scalars['Boolean']>;
   questions?: InputMaybe<Auth_Questions_Arr_Rel_Insert_Input>;
   quiz_category?: InputMaybe<Auth_Quiz_Categories_Obj_Rel_Insert_Input>;
   quiz_category_id?: InputMaybe<Scalars['uuid']>;
+  quiz_user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   title?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -2098,24 +2346,24 @@ export type Auth_Quizes_Max_Fields = {
   __typename?: 'auth_quizes_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  difficulty?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
   quiz_category_id?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by max() on columns of table "auth.quizes" */
 export type Auth_Quizes_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
-  difficulty?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   quiz_category_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -2123,24 +2371,24 @@ export type Auth_Quizes_Min_Fields = {
   __typename?: 'auth_quizes_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  difficulty?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
   quiz_category_id?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by min() on columns of table "auth.quizes" */
 export type Auth_Quizes_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
-  difficulty?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   quiz_category_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "auth.quizes" */
@@ -2165,12 +2413,15 @@ export type Auth_Quizes_Order_By = {
   description?: InputMaybe<Order_By>;
   difficulty?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  published?: InputMaybe<Order_By>;
   questions_aggregate?: InputMaybe<Auth_Questions_Aggregate_Order_By>;
   quiz_category?: InputMaybe<Auth_Quiz_Categories_Order_By>;
   quiz_category_id?: InputMaybe<Order_By>;
+  quiz_user?: InputMaybe<Users_Order_By>;
   title?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: auth_quizes */
@@ -2189,69 +2440,31 @@ export enum Auth_Quizes_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Published = 'published',
+  /** column name */
   QuizCategoryId = 'quiz_category_id',
   /** column name */
   Title = 'title',
   /** column name */
   Type = 'type',
   /** column name */
-  UpdatedAt = 'updated_at'
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
 }
 
 /** input type for updating data in table "auth.quizes" */
 export type Auth_Quizes_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   description?: InputMaybe<Scalars['String']>;
-  difficulty?: InputMaybe<Scalars['Int']>;
+  difficulty?: InputMaybe<Auth_Difficulties_Enum>;
   id?: InputMaybe<Scalars['uuid']>;
+  published?: InputMaybe<Scalars['Boolean']>;
   quiz_category_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** aggregate stddev on columns */
-export type Auth_Quizes_Stddev_Fields = {
-  __typename?: 'auth_quizes_stddev_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev() on columns of table "auth.quizes" */
-export type Auth_Quizes_Stddev_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Auth_Quizes_Stddev_Pop_Fields = {
-  __typename?: 'auth_quizes_stddev_pop_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_pop() on columns of table "auth.quizes" */
-export type Auth_Quizes_Stddev_Pop_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Auth_Quizes_Stddev_Samp_Fields = {
-  __typename?: 'auth_quizes_stddev_samp_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_samp() on columns of table "auth.quizes" */
-export type Auth_Quizes_Stddev_Samp_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
-
-/** aggregate sum on columns */
-export type Auth_Quizes_Sum_Fields = {
-  __typename?: 'auth_quizes_sum_fields';
-  difficulty?: Maybe<Scalars['Int']>;
-};
-
-/** order by sum() on columns of table "auth.quizes" */
-export type Auth_Quizes_Sum_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Scalars['uuid']>;
 };
 
 /** update columns of table "auth.quizes" */
@@ -2265,47 +2478,18 @@ export enum Auth_Quizes_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Published = 'published',
+  /** column name */
   QuizCategoryId = 'quiz_category_id',
   /** column name */
   Title = 'title',
   /** column name */
   Type = 'type',
   /** column name */
-  UpdatedAt = 'updated_at'
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
 }
-
-/** aggregate var_pop on columns */
-export type Auth_Quizes_Var_Pop_Fields = {
-  __typename?: 'auth_quizes_var_pop_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_pop() on columns of table "auth.quizes" */
-export type Auth_Quizes_Var_Pop_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type Auth_Quizes_Var_Samp_Fields = {
-  __typename?: 'auth_quizes_var_samp_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_samp() on columns of table "auth.quizes" */
-export type Auth_Quizes_Var_Samp_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type Auth_Quizes_Variance_Fields = {
-  __typename?: 'auth_quizes_variance_fields';
-  difficulty?: Maybe<Scalars['Float']>;
-};
-
-/** order by variance() on columns of table "auth.quizes" */
-export type Auth_Quizes_Variance_Order_By = {
-  difficulty?: InputMaybe<Order_By>;
-};
 
 /** columns and relationships of "storage.buckets" */
 export type Buckets = {
@@ -3049,6 +3233,10 @@ export type Mutation_Root = {
   delete_auth_completed_quizes?: Maybe<Auth_Completed_Quizes_Mutation_Response>;
   /** delete single row from the table: "auth.completed_quizes" */
   delete_auth_completed_quizes_by_pk?: Maybe<Auth_Completed_Quizes>;
+  /** delete data from the table: "auth.difficulties" */
+  delete_auth_difficulties?: Maybe<Auth_Difficulties_Mutation_Response>;
+  /** delete single row from the table: "auth.difficulties" */
+  delete_auth_difficulties_by_pk?: Maybe<Auth_Difficulties>;
   /** delete data from the table: "auth.question_options" */
   delete_auth_question_options?: Maybe<Auth_Question_Options_Mutation_Response>;
   /** delete single row from the table: "auth.question_options" */
@@ -3105,6 +3293,10 @@ export type Mutation_Root = {
   insert_auth_completed_quizes?: Maybe<Auth_Completed_Quizes_Mutation_Response>;
   /** insert a single row into the table: "auth.completed_quizes" */
   insert_auth_completed_quizes_one?: Maybe<Auth_Completed_Quizes>;
+  /** insert data into the table: "auth.difficulties" */
+  insert_auth_difficulties?: Maybe<Auth_Difficulties_Mutation_Response>;
+  /** insert a single row into the table: "auth.difficulties" */
+  insert_auth_difficulties_one?: Maybe<Auth_Difficulties>;
   /** insert data into the table: "auth.question_options" */
   insert_auth_question_options?: Maybe<Auth_Question_Options_Mutation_Response>;
   /** insert a single row into the table: "auth.question_options" */
@@ -3161,6 +3353,10 @@ export type Mutation_Root = {
   update_auth_completed_quizes?: Maybe<Auth_Completed_Quizes_Mutation_Response>;
   /** update single row of the table: "auth.completed_quizes" */
   update_auth_completed_quizes_by_pk?: Maybe<Auth_Completed_Quizes>;
+  /** update data of the table: "auth.difficulties" */
+  update_auth_difficulties?: Maybe<Auth_Difficulties_Mutation_Response>;
+  /** update single row of the table: "auth.difficulties" */
+  update_auth_difficulties_by_pk?: Maybe<Auth_Difficulties>;
   /** update data of the table: "auth.question_options" */
   update_auth_question_options?: Maybe<Auth_Question_Options_Mutation_Response>;
   /** update single row of the table: "auth.question_options" */
@@ -3297,6 +3493,18 @@ export type Mutation_RootDelete_Auth_Completed_QuizesArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Auth_Completed_Quizes_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Auth_DifficultiesArgs = {
+  where: Auth_Difficulties_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Auth_Difficulties_By_PkArgs = {
+  title: Scalars['String'];
 };
 
 
@@ -3489,6 +3697,20 @@ export type Mutation_RootInsert_Auth_Completed_Quizes_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Auth_DifficultiesArgs = {
+  objects: Array<Auth_Difficulties_Insert_Input>;
+  on_conflict?: InputMaybe<Auth_Difficulties_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Auth_Difficulties_OneArgs = {
+  object: Auth_Difficulties_Insert_Input;
+  on_conflict?: InputMaybe<Auth_Difficulties_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Auth_Question_OptionsArgs = {
   objects: Array<Auth_Question_Options_Insert_Input>;
   on_conflict?: InputMaybe<Auth_Question_Options_On_Conflict>;
@@ -3553,6 +3775,11 @@ export type Mutation_RootUpdateAuthProviderArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdateAuthProviderRequestArgs = {
+  _append?: InputMaybe<AuthProviderRequests_Append_Input>;
+  _delete_at_path?: InputMaybe<AuthProviderRequests_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<AuthProviderRequests_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<AuthProviderRequests_Delete_Key_Input>;
+  _prepend?: InputMaybe<AuthProviderRequests_Prepend_Input>;
   _set?: InputMaybe<AuthProviderRequests_Set_Input>;
   pk_columns: AuthProviderRequests_Pk_Columns_Input;
 };
@@ -3560,6 +3787,11 @@ export type Mutation_RootUpdateAuthProviderRequestArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdateAuthProviderRequestsArgs = {
+  _append?: InputMaybe<AuthProviderRequests_Append_Input>;
+  _delete_at_path?: InputMaybe<AuthProviderRequests_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<AuthProviderRequests_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<AuthProviderRequests_Delete_Key_Input>;
+  _prepend?: InputMaybe<AuthProviderRequests_Prepend_Input>;
   _set?: InputMaybe<AuthProviderRequests_Set_Input>;
   where: AuthProviderRequests_Bool_Exp;
 };
@@ -3699,6 +3931,20 @@ export type Mutation_RootUpdate_Auth_Completed_Quizes_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Auth_DifficultiesArgs = {
+  _set?: InputMaybe<Auth_Difficulties_Set_Input>;
+  where: Auth_Difficulties_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Auth_Difficulties_By_PkArgs = {
+  _set?: InputMaybe<Auth_Difficulties_Set_Input>;
+  pk_columns: Auth_Difficulties_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Auth_Question_OptionsArgs = {
   _set?: InputMaybe<Auth_Question_Options_Set_Input>;
   where: Auth_Question_Options_Bool_Exp;
@@ -3714,6 +3960,7 @@ export type Mutation_RootUpdate_Auth_Question_Options_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Auth_QuestionsArgs = {
+  _inc?: InputMaybe<Auth_Questions_Inc_Input>;
   _set?: InputMaybe<Auth_Questions_Set_Input>;
   where: Auth_Questions_Bool_Exp;
 };
@@ -3721,6 +3968,7 @@ export type Mutation_RootUpdate_Auth_QuestionsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Auth_Questions_By_PkArgs = {
+  _inc?: InputMaybe<Auth_Questions_Inc_Input>;
   _set?: InputMaybe<Auth_Questions_Set_Input>;
   pk_columns: Auth_Questions_Pk_Columns_Input;
 };
@@ -3742,7 +3990,6 @@ export type Mutation_RootUpdate_Auth_Quiz_Categories_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Auth_QuizesArgs = {
-  _inc?: InputMaybe<Auth_Quizes_Inc_Input>;
   _set?: InputMaybe<Auth_Quizes_Set_Input>;
   where: Auth_Quizes_Bool_Exp;
 };
@@ -3750,9 +3997,21 @@ export type Mutation_RootUpdate_Auth_QuizesArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Auth_Quizes_By_PkArgs = {
-  _inc?: InputMaybe<Auth_Quizes_Inc_Input>;
   _set?: InputMaybe<Auth_Quizes_Set_Input>;
   pk_columns: Auth_Quizes_Pk_Columns_Input;
+};
+
+/** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
+export type Numeric_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['numeric']>;
+  _gt?: InputMaybe<Scalars['numeric']>;
+  _gte?: InputMaybe<Scalars['numeric']>;
+  _in?: InputMaybe<Array<Scalars['numeric']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['numeric']>;
+  _lte?: InputMaybe<Scalars['numeric']>;
+  _neq?: InputMaybe<Scalars['numeric']>;
+  _nin?: InputMaybe<Array<Scalars['numeric']>>;
 };
 
 /** column ordering options */
@@ -3815,6 +4074,12 @@ export type Query_Root = {
   auth_completed_quizes_aggregate: Auth_Completed_Quizes_Aggregate;
   /** fetch data from the table: "auth.completed_quizes" using primary key columns */
   auth_completed_quizes_by_pk?: Maybe<Auth_Completed_Quizes>;
+  /** fetch data from the table: "auth.difficulties" */
+  auth_difficulties: Array<Auth_Difficulties>;
+  /** fetch aggregated fields from the table: "auth.difficulties" */
+  auth_difficulties_aggregate: Auth_Difficulties_Aggregate;
+  /** fetch data from the table: "auth.difficulties" using primary key columns */
+  auth_difficulties_by_pk?: Maybe<Auth_Difficulties>;
   /** fetch data from the table: "auth.question_options" */
   auth_question_options: Array<Auth_Question_Options>;
   /** fetch aggregated fields from the table: "auth.question_options" */
@@ -3853,10 +4118,10 @@ export type Query_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
-  /** fetch aggregated fields from the table: "auth.users" */
-  userAggregate: Users_Aggregate;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
+  /** fetch aggregated fields from the table: "auth.users" */
+  usersAggregate: Users_Aggregate;
 };
 
 
@@ -4021,6 +4286,29 @@ export type Query_RootAuth_Completed_Quizes_By_PkArgs = {
 };
 
 
+export type Query_RootAuth_DifficultiesArgs = {
+  distinct_on?: InputMaybe<Array<Auth_Difficulties_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Auth_Difficulties_Order_By>>;
+  where?: InputMaybe<Auth_Difficulties_Bool_Exp>;
+};
+
+
+export type Query_RootAuth_Difficulties_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Auth_Difficulties_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Auth_Difficulties_Order_By>>;
+  where?: InputMaybe<Auth_Difficulties_Bool_Exp>;
+};
+
+
+export type Query_RootAuth_Difficulties_By_PkArgs = {
+  title: Scalars['String'];
+};
+
+
 export type Query_RootAuth_Question_OptionsArgs = {
   distinct_on?: InputMaybe<Array<Auth_Question_Options_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -4164,7 +4452,7 @@ export type Query_RootUserArgs = {
 };
 
 
-export type Query_RootUserAggregateArgs = {
+export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -4173,7 +4461,7 @@ export type Query_RootUserAggregateArgs = {
 };
 
 
-export type Query_RootUsersArgs = {
+export type Query_RootUsersAggregateArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -4225,6 +4513,12 @@ export type Subscription_Root = {
   auth_completed_quizes_aggregate: Auth_Completed_Quizes_Aggregate;
   /** fetch data from the table: "auth.completed_quizes" using primary key columns */
   auth_completed_quizes_by_pk?: Maybe<Auth_Completed_Quizes>;
+  /** fetch data from the table: "auth.difficulties" */
+  auth_difficulties: Array<Auth_Difficulties>;
+  /** fetch aggregated fields from the table: "auth.difficulties" */
+  auth_difficulties_aggregate: Auth_Difficulties_Aggregate;
+  /** fetch data from the table: "auth.difficulties" using primary key columns */
+  auth_difficulties_by_pk?: Maybe<Auth_Difficulties>;
   /** fetch data from the table: "auth.question_options" */
   auth_question_options: Array<Auth_Question_Options>;
   /** fetch aggregated fields from the table: "auth.question_options" */
@@ -4263,10 +4557,10 @@ export type Subscription_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
-  /** fetch aggregated fields from the table: "auth.users" */
-  userAggregate: Users_Aggregate;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
+  /** fetch aggregated fields from the table: "auth.users" */
+  usersAggregate: Users_Aggregate;
 };
 
 
@@ -4431,6 +4725,29 @@ export type Subscription_RootAuth_Completed_Quizes_By_PkArgs = {
 };
 
 
+export type Subscription_RootAuth_DifficultiesArgs = {
+  distinct_on?: InputMaybe<Array<Auth_Difficulties_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Auth_Difficulties_Order_By>>;
+  where?: InputMaybe<Auth_Difficulties_Bool_Exp>;
+};
+
+
+export type Subscription_RootAuth_Difficulties_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Auth_Difficulties_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Auth_Difficulties_Order_By>>;
+  where?: InputMaybe<Auth_Difficulties_Bool_Exp>;
+};
+
+
+export type Subscription_RootAuth_Difficulties_By_PkArgs = {
+  title: Scalars['String'];
+};
+
+
 export type Subscription_RootAuth_Question_OptionsArgs = {
   distinct_on?: InputMaybe<Array<Auth_Question_Options_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -4574,7 +4891,7 @@ export type Subscription_RootUserArgs = {
 };
 
 
-export type Subscription_RootUserAggregateArgs = {
+export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -4583,7 +4900,7 @@ export type Subscription_RootUserAggregateArgs = {
 };
 
 
-export type Subscription_RootUsersArgs = {
+export type Subscription_RootUsersAggregateArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -5150,6 +5467,74 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
+export type Delete_Auth_Question_Options_By_PkMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type Delete_Auth_Question_Options_By_PkMutation = { __typename?: 'mutation_root', delete_auth_question_options_by_pk?: { __typename?: 'auth_question_options', id: any } | null };
+
+export type Auth_Quiz_CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Auth_Quiz_CategoriesQuery = { __typename?: 'query_root', auth_quiz_categories: Array<{ __typename?: 'auth_quiz_categories', id: any, title: string, image_url?: string | null }> };
+
+export type Auth_Quiz_Categories_By_PkQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type Auth_Quiz_Categories_By_PkQuery = { __typename?: 'query_root', auth_quiz_categories_by_pk?: { __typename?: 'auth_quiz_categories', id: any, title: string, image_url?: string | null, quizes: Array<{ __typename?: 'auth_quizes', id: any, title?: string | null, created_at?: any | null, description?: string | null, difficulty?: Auth_Difficulties_Enum | null, questions: Array<{ __typename?: 'auth_questions', id: any, title: string, correct_option?: { __typename?: 'auth_question_options', id: any, title: string } | null }> }> } | null };
+
+export type UpdateQuizesMutationVariables = Exact<{
+  data: Auth_Quizes_Bool_Exp;
+}>;
+
+
+export type UpdateQuizesMutation = { __typename?: 'mutation_root', update_auth_quizes?: { __typename?: 'auth_quizes_mutation_response', affected_rows: number } | null };
+
+export type InsertQuizMutationVariables = Exact<{
+  data: Auth_Quizes_Insert_Input;
+}>;
+
+
+export type InsertQuizMutation = { __typename?: 'mutation_root', insert_auth_quizes_one?: { __typename?: 'auth_quizes', id: any, title?: string | null } | null };
+
+export type InsertQuestionsMutationVariables = Exact<{
+  data: Array<Auth_Questions_Insert_Input> | Auth_Questions_Insert_Input;
+}>;
+
+
+export type InsertQuestionsMutation = { __typename?: 'mutation_root', insert_auth_questions?: { __typename?: 'auth_questions_mutation_response', returning: Array<{ __typename?: 'auth_questions', id: any, title: string, order?: any | null }> } | null };
+
+export type InsertQuestionOptionsMutationVariables = Exact<{
+  data: Array<Auth_Question_Options_Insert_Input> | Auth_Question_Options_Insert_Input;
+}>;
+
+
+export type InsertQuestionOptionsMutation = { __typename?: 'mutation_root', insert_auth_question_options?: { __typename?: 'auth_question_options_mutation_response', returning: Array<{ __typename?: 'auth_question_options', id: any, title: string, question_id: any }> } | null };
+
+export type MyMutationMutationVariables = Exact<{
+  data: Auth_Quizes_Insert_Input;
+}>;
+
+
+export type MyMutationMutation = { __typename?: 'mutation_root', insert_auth_quizes_one?: { __typename?: 'auth_quizes', id: any, title?: string | null } | null };
+
+export type GetQuizQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type GetQuizQuery = { __typename?: 'query_root', auth_quizes_by_pk?: { __typename?: 'auth_quizes', id: any, title?: string | null, created_at?: any | null, description?: string | null, published: boolean, difficulty?: Auth_Difficulties_Enum | null, quiz_category_id?: any | null, quiz_category?: { __typename?: 'auth_quiz_categories', id: any, title: string, image_url?: string | null } | null, questions: Array<{ __typename?: 'auth_questions', id: any, title: string, description?: string | null, quiz_id: any, type?: string | null, order?: any | null, correct_option?: { __typename?: 'auth_question_options', title: string, id: any } | null, options: Array<{ __typename?: 'auth_question_options', id: any, title: string, question_id: any }> }> } | null };
+
+export type GetQuizesQueryVariables = Exact<{
+  where?: InputMaybe<Auth_Quizes_Bool_Exp>;
+}>;
+
+
+export type GetQuizesQuery = { __typename?: 'query_root', auth_quizes: Array<{ __typename?: 'auth_quizes', id: any, title?: string | null, created_at?: any | null, description?: string | null, published: boolean, difficulty?: Auth_Difficulties_Enum | null, quiz_category_id?: any | null, quiz_category?: { __typename?: 'auth_quiz_categories', id: any, title: string, image_url?: string | null } | null, questions: Array<{ __typename?: 'auth_questions', id: any, title: string, description?: string | null, quiz_id: any, type?: string | null, order?: any | null, correct_option?: { __typename?: 'auth_question_options', title: string, id: any } | null, options: Array<{ __typename?: 'auth_question_options', id: any, title: string, question_id: any }> }> }> };
+
 export type CompleteQuizMutationVariables = Exact<{
   data: Array<Auth_Completed_Quizes_Insert_Input> | Auth_Completed_Quizes_Insert_Input;
 }>;
@@ -5157,71 +5542,53 @@ export type CompleteQuizMutationVariables = Exact<{
 
 export type CompleteQuizMutation = { __typename?: 'mutation_root', insert_auth_completed_quizes?: { __typename?: 'auth_completed_quizes_mutation_response', affected_rows: number } | null };
 
-export type Auth_Quiz_CategoriesQueryVariables = Exact<{
-  where?: InputMaybe<Auth_Quiz_Categories_Bool_Exp>;
+export type CreateOneQuestionMutationVariables = Exact<{
+  data: Auth_Questions_Insert_Input;
 }>;
 
 
-export type Auth_Quiz_CategoriesQuery = { __typename?: 'query_root', auth_quiz_categories: Array<{ __typename?: 'auth_quiz_categories', id: any, title: string, image_url?: string | null, quizes: Array<{ __typename?: 'auth_quizes', id: any, title?: string | null, created_at?: any | null, description?: string | null, difficulty?: number | null, questions: Array<{ __typename?: 'auth_questions', id: any, title: string }> }> }> };
-
-export type GetQuizesQueryVariables = Exact<{
-  where?: InputMaybe<Auth_Quizes_Bool_Exp>;
-}>;
+export type CreateOneQuestionMutation = { __typename?: 'mutation_root', insert_auth_questions_one?: { __typename?: 'auth_questions', id: any } | null };
 
 
-export type GetQuizesQuery = { __typename?: 'query_root', auth_quizes: Array<{ __typename?: 'auth_quizes', id: any, title?: string | null, created_at?: any | null, description?: string | null, difficulty?: number | null, quiz_category?: { __typename?: 'auth_quiz_categories', id: any, title: string, image_url?: string | null } | null, questions: Array<{ __typename?: 'auth_questions', id: any, title: string, description?: string | null, correct_option?: { __typename?: 'auth_question_options', id: any } | null, options: Array<{ __typename?: 'auth_question_options', id: any, title: string }> }> }> };
-
-
-export const CompleteQuizDocument = gql`
-    mutation completeQuiz($data: [auth_completed_quizes_insert_input!]!) {
-  insert_auth_completed_quizes(objects: $data) {
-    affected_rows
+export const Delete_Auth_Question_Options_By_PkDocument = gql`
+    mutation delete_auth_question_options_by_pk($id: uuid!) {
+  delete_auth_question_options_by_pk(id: $id) {
+    id
   }
 }
     `;
-export type CompleteQuizMutationFn = Apollo.MutationFunction<CompleteQuizMutation, CompleteQuizMutationVariables>;
+export type Delete_Auth_Question_Options_By_PkMutationFn = Apollo.MutationFunction<Delete_Auth_Question_Options_By_PkMutation, Delete_Auth_Question_Options_By_PkMutationVariables>;
 
 /**
- * __useCompleteQuizMutation__
+ * __useDelete_Auth_Question_Options_By_PkMutation__
  *
- * To run a mutation, you first call `useCompleteQuizMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCompleteQuizMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useDelete_Auth_Question_Options_By_PkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDelete_Auth_Question_Options_By_PkMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [completeQuizMutation, { data, loading, error }] = useCompleteQuizMutation({
+ * const [deleteAuthQuestionOptionsByPkMutation, { data, loading, error }] = useDelete_Auth_Question_Options_By_PkMutation({
  *   variables: {
- *      data: // value for 'data'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useCompleteQuizMutation(baseOptions?: Apollo.MutationHookOptions<CompleteQuizMutation, CompleteQuizMutationVariables>) {
+export function useDelete_Auth_Question_Options_By_PkMutation(baseOptions?: Apollo.MutationHookOptions<Delete_Auth_Question_Options_By_PkMutation, Delete_Auth_Question_Options_By_PkMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CompleteQuizMutation, CompleteQuizMutationVariables>(CompleteQuizDocument, options);
+        return Apollo.useMutation<Delete_Auth_Question_Options_By_PkMutation, Delete_Auth_Question_Options_By_PkMutationVariables>(Delete_Auth_Question_Options_By_PkDocument, options);
       }
-export type CompleteQuizMutationHookResult = ReturnType<typeof useCompleteQuizMutation>;
-export type CompleteQuizMutationResult = Apollo.MutationResult<CompleteQuizMutation>;
-export type CompleteQuizMutationOptions = Apollo.BaseMutationOptions<CompleteQuizMutation, CompleteQuizMutationVariables>;
+export type Delete_Auth_Question_Options_By_PkMutationHookResult = ReturnType<typeof useDelete_Auth_Question_Options_By_PkMutation>;
+export type Delete_Auth_Question_Options_By_PkMutationResult = Apollo.MutationResult<Delete_Auth_Question_Options_By_PkMutation>;
+export type Delete_Auth_Question_Options_By_PkMutationOptions = Apollo.BaseMutationOptions<Delete_Auth_Question_Options_By_PkMutation, Delete_Auth_Question_Options_By_PkMutationVariables>;
 export const Auth_Quiz_CategoriesDocument = gql`
-    query auth_quiz_categories($where: auth_quiz_categories_bool_exp) {
-  auth_quiz_categories(where: $where) {
+    query auth_quiz_categories {
+  auth_quiz_categories {
     id
     title
     image_url
-    quizes {
-      id
-      title
-      created_at
-      description
-      difficulty
-      questions {
-        id
-        title
-      }
-    }
   }
 }
     `;
@@ -5238,7 +5605,6 @@ export const Auth_Quiz_CategoriesDocument = gql`
  * @example
  * const { data, loading, error } = useAuth_Quiz_CategoriesQuery({
  *   variables: {
- *      where: // value for 'where'
  *   },
  * });
  */
@@ -5253,14 +5619,255 @@ export function useAuth_Quiz_CategoriesLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type Auth_Quiz_CategoriesQueryHookResult = ReturnType<typeof useAuth_Quiz_CategoriesQuery>;
 export type Auth_Quiz_CategoriesLazyQueryHookResult = ReturnType<typeof useAuth_Quiz_CategoriesLazyQuery>;
 export type Auth_Quiz_CategoriesQueryResult = Apollo.QueryResult<Auth_Quiz_CategoriesQuery, Auth_Quiz_CategoriesQueryVariables>;
-export const GetQuizesDocument = gql`
-    query getQuizes($where: auth_quizes_bool_exp) {
-  auth_quizes(where: $where) {
+export const Auth_Quiz_Categories_By_PkDocument = gql`
+    query auth_quiz_categories_by_pk($id: uuid!) {
+  auth_quiz_categories_by_pk(id: $id) {
+    id
+    title
+    image_url
+    quizes {
+      id
+      title
+      created_at
+      description
+      difficulty
+      questions {
+        correct_option {
+          id
+          title
+        }
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAuth_Quiz_Categories_By_PkQuery__
+ *
+ * To run a query within a React component, call `useAuth_Quiz_Categories_By_PkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAuth_Quiz_Categories_By_PkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAuth_Quiz_Categories_By_PkQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAuth_Quiz_Categories_By_PkQuery(baseOptions: Apollo.QueryHookOptions<Auth_Quiz_Categories_By_PkQuery, Auth_Quiz_Categories_By_PkQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Auth_Quiz_Categories_By_PkQuery, Auth_Quiz_Categories_By_PkQueryVariables>(Auth_Quiz_Categories_By_PkDocument, options);
+      }
+export function useAuth_Quiz_Categories_By_PkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Auth_Quiz_Categories_By_PkQuery, Auth_Quiz_Categories_By_PkQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Auth_Quiz_Categories_By_PkQuery, Auth_Quiz_Categories_By_PkQueryVariables>(Auth_Quiz_Categories_By_PkDocument, options);
+        }
+export type Auth_Quiz_Categories_By_PkQueryHookResult = ReturnType<typeof useAuth_Quiz_Categories_By_PkQuery>;
+export type Auth_Quiz_Categories_By_PkLazyQueryHookResult = ReturnType<typeof useAuth_Quiz_Categories_By_PkLazyQuery>;
+export type Auth_Quiz_Categories_By_PkQueryResult = Apollo.QueryResult<Auth_Quiz_Categories_By_PkQuery, Auth_Quiz_Categories_By_PkQueryVariables>;
+export const UpdateQuizesDocument = gql`
+    mutation UpdateQuizes($data: auth_quizes_bool_exp!) {
+  update_auth_quizes(where: $data) {
+    affected_rows
+  }
+}
+    `;
+export type UpdateQuizesMutationFn = Apollo.MutationFunction<UpdateQuizesMutation, UpdateQuizesMutationVariables>;
+
+/**
+ * __useUpdateQuizesMutation__
+ *
+ * To run a mutation, you first call `useUpdateQuizesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateQuizesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateQuizesMutation, { data, loading, error }] = useUpdateQuizesMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateQuizesMutation(baseOptions?: Apollo.MutationHookOptions<UpdateQuizesMutation, UpdateQuizesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateQuizesMutation, UpdateQuizesMutationVariables>(UpdateQuizesDocument, options);
+      }
+export type UpdateQuizesMutationHookResult = ReturnType<typeof useUpdateQuizesMutation>;
+export type UpdateQuizesMutationResult = Apollo.MutationResult<UpdateQuizesMutation>;
+export type UpdateQuizesMutationOptions = Apollo.BaseMutationOptions<UpdateQuizesMutation, UpdateQuizesMutationVariables>;
+export const InsertQuizDocument = gql`
+    mutation insertQuiz($data: auth_quizes_insert_input!) {
+  insert_auth_quizes_one(
+    object: $data
+    on_conflict: {constraint: quizes_pkey, update_columns: [title, description, difficulty, quiz_category_id, type]}
+  ) {
+    id
+    title
+  }
+}
+    `;
+export type InsertQuizMutationFn = Apollo.MutationFunction<InsertQuizMutation, InsertQuizMutationVariables>;
+
+/**
+ * __useInsertQuizMutation__
+ *
+ * To run a mutation, you first call `useInsertQuizMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertQuizMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertQuizMutation, { data, loading, error }] = useInsertQuizMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useInsertQuizMutation(baseOptions?: Apollo.MutationHookOptions<InsertQuizMutation, InsertQuizMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertQuizMutation, InsertQuizMutationVariables>(InsertQuizDocument, options);
+      }
+export type InsertQuizMutationHookResult = ReturnType<typeof useInsertQuizMutation>;
+export type InsertQuizMutationResult = Apollo.MutationResult<InsertQuizMutation>;
+export type InsertQuizMutationOptions = Apollo.BaseMutationOptions<InsertQuizMutation, InsertQuizMutationVariables>;
+export const InsertQuestionsDocument = gql`
+    mutation insertQuestions($data: [auth_questions_insert_input!]!) {
+  insert_auth_questions(
+    objects: $data
+    on_conflict: {constraint: questions_pkey, update_columns: [order, updated_at, created_at, quiz_id, title, type, correct_option_id, description]}
+  ) {
+    returning {
+      id
+      title
+      order
+    }
+  }
+}
+    `;
+export type InsertQuestionsMutationFn = Apollo.MutationFunction<InsertQuestionsMutation, InsertQuestionsMutationVariables>;
+
+/**
+ * __useInsertQuestionsMutation__
+ *
+ * To run a mutation, you first call `useInsertQuestionsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertQuestionsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertQuestionsMutation, { data, loading, error }] = useInsertQuestionsMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useInsertQuestionsMutation(baseOptions?: Apollo.MutationHookOptions<InsertQuestionsMutation, InsertQuestionsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertQuestionsMutation, InsertQuestionsMutationVariables>(InsertQuestionsDocument, options);
+      }
+export type InsertQuestionsMutationHookResult = ReturnType<typeof useInsertQuestionsMutation>;
+export type InsertQuestionsMutationResult = Apollo.MutationResult<InsertQuestionsMutation>;
+export type InsertQuestionsMutationOptions = Apollo.BaseMutationOptions<InsertQuestionsMutation, InsertQuestionsMutationVariables>;
+export const InsertQuestionOptionsDocument = gql`
+    mutation insertQuestionOptions($data: [auth_question_options_insert_input!]!) {
+  insert_auth_question_options(
+    objects: $data
+    on_conflict: {constraint: question_options_id_title_key, update_columns: [id, title]}
+  ) {
+    returning {
+      id
+      title
+      question_id
+    }
+  }
+}
+    `;
+export type InsertQuestionOptionsMutationFn = Apollo.MutationFunction<InsertQuestionOptionsMutation, InsertQuestionOptionsMutationVariables>;
+
+/**
+ * __useInsertQuestionOptionsMutation__
+ *
+ * To run a mutation, you first call `useInsertQuestionOptionsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertQuestionOptionsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertQuestionOptionsMutation, { data, loading, error }] = useInsertQuestionOptionsMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useInsertQuestionOptionsMutation(baseOptions?: Apollo.MutationHookOptions<InsertQuestionOptionsMutation, InsertQuestionOptionsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertQuestionOptionsMutation, InsertQuestionOptionsMutationVariables>(InsertQuestionOptionsDocument, options);
+      }
+export type InsertQuestionOptionsMutationHookResult = ReturnType<typeof useInsertQuestionOptionsMutation>;
+export type InsertQuestionOptionsMutationResult = Apollo.MutationResult<InsertQuestionOptionsMutation>;
+export type InsertQuestionOptionsMutationOptions = Apollo.BaseMutationOptions<InsertQuestionOptionsMutation, InsertQuestionOptionsMutationVariables>;
+export const MyMutationDocument = gql`
+    mutation MyMutation($data: auth_quizes_insert_input!) {
+  insert_auth_quizes_one(
+    object: $data
+    on_conflict: {constraint: quizes_pkey, update_columns: [title, description, difficulty, quiz_category_id, type]}
+  ) {
+    id
+    title
+  }
+}
+    `;
+export type MyMutationMutationFn = Apollo.MutationFunction<MyMutationMutation, MyMutationMutationVariables>;
+
+/**
+ * __useMyMutationMutation__
+ *
+ * To run a mutation, you first call `useMyMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMyMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [myMutationMutation, { data, loading, error }] = useMyMutationMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useMyMutationMutation(baseOptions?: Apollo.MutationHookOptions<MyMutationMutation, MyMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MyMutationMutation, MyMutationMutationVariables>(MyMutationDocument, options);
+      }
+export type MyMutationMutationHookResult = ReturnType<typeof useMyMutationMutation>;
+export type MyMutationMutationResult = Apollo.MutationResult<MyMutationMutation>;
+export type MyMutationMutationOptions = Apollo.BaseMutationOptions<MyMutationMutation, MyMutationMutationVariables>;
+export const GetQuizDocument = gql`
+    query getQuiz($id: uuid!) {
+  auth_quizes_by_pk(id: $id) {
     id
     title
     created_at
     description
+    published
     difficulty
+    quiz_category_id
     quiz_category {
       id
       title
@@ -5269,13 +5876,81 @@ export const GetQuizesDocument = gql`
     questions {
       id
       title
+      description
+      quiz_id
       correct_option {
+        title
         id
       }
-      description
+      type
+      order
       options {
         id
         title
+        question_id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetQuizQuery__
+ *
+ * To run a query within a React component, call `useGetQuizQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetQuizQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetQuizQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetQuizQuery(baseOptions: Apollo.QueryHookOptions<GetQuizQuery, GetQuizQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetQuizQuery, GetQuizQueryVariables>(GetQuizDocument, options);
+      }
+export function useGetQuizLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetQuizQuery, GetQuizQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetQuizQuery, GetQuizQueryVariables>(GetQuizDocument, options);
+        }
+export type GetQuizQueryHookResult = ReturnType<typeof useGetQuizQuery>;
+export type GetQuizLazyQueryHookResult = ReturnType<typeof useGetQuizLazyQuery>;
+export type GetQuizQueryResult = Apollo.QueryResult<GetQuizQuery, GetQuizQueryVariables>;
+export const GetQuizesDocument = gql`
+    query getQuizes($where: auth_quizes_bool_exp) {
+  auth_quizes(where: $where) {
+    id
+    title
+    created_at
+    description
+    published
+    difficulty
+    quiz_category_id
+    quiz_category {
+      id
+      title
+      image_url
+    }
+    questions {
+      id
+      title
+      description
+      quiz_id
+      correct_option {
+        title
+        id
+      }
+      type
+      order
+      options {
+        id
+        title
+        question_id
       }
     }
   }
@@ -5309,3 +5984,69 @@ export function useGetQuizesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetQuizesQueryHookResult = ReturnType<typeof useGetQuizesQuery>;
 export type GetQuizesLazyQueryHookResult = ReturnType<typeof useGetQuizesLazyQuery>;
 export type GetQuizesQueryResult = Apollo.QueryResult<GetQuizesQuery, GetQuizesQueryVariables>;
+export const CompleteQuizDocument = gql`
+    mutation completeQuiz($data: [auth_completed_quizes_insert_input!]!) {
+  insert_auth_completed_quizes(objects: $data) {
+    affected_rows
+  }
+}
+    `;
+export type CompleteQuizMutationFn = Apollo.MutationFunction<CompleteQuizMutation, CompleteQuizMutationVariables>;
+
+/**
+ * __useCompleteQuizMutation__
+ *
+ * To run a mutation, you first call `useCompleteQuizMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCompleteQuizMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [completeQuizMutation, { data, loading, error }] = useCompleteQuizMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCompleteQuizMutation(baseOptions?: Apollo.MutationHookOptions<CompleteQuizMutation, CompleteQuizMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CompleteQuizMutation, CompleteQuizMutationVariables>(CompleteQuizDocument, options);
+      }
+export type CompleteQuizMutationHookResult = ReturnType<typeof useCompleteQuizMutation>;
+export type CompleteQuizMutationResult = Apollo.MutationResult<CompleteQuizMutation>;
+export type CompleteQuizMutationOptions = Apollo.BaseMutationOptions<CompleteQuizMutation, CompleteQuizMutationVariables>;
+export const CreateOneQuestionDocument = gql`
+    mutation createOneQuestion($data: auth_questions_insert_input!) {
+  insert_auth_questions_one(object: $data) {
+    id
+  }
+}
+    `;
+export type CreateOneQuestionMutationFn = Apollo.MutationFunction<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>;
+
+/**
+ * __useCreateOneQuestionMutation__
+ *
+ * To run a mutation, you first call `useCreateOneQuestionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneQuestionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneQuestionMutation, { data, loading, error }] = useCreateOneQuestionMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateOneQuestionMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>(CreateOneQuestionDocument, options);
+      }
+export type CreateOneQuestionMutationHookResult = ReturnType<typeof useCreateOneQuestionMutation>;
+export type CreateOneQuestionMutationResult = Apollo.MutationResult<CreateOneQuestionMutation>;
+export type CreateOneQuestionMutationOptions = Apollo.BaseMutationOptions<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>;

@@ -9,6 +9,4 @@ const nhost = new NhostClient({
   backendUrl: BACKEND_URL as string,
 });
 
-// console.log("gql", nhost.graphql.getUrl());
-
 export default nhost;

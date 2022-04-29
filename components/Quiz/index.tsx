@@ -137,8 +137,8 @@ const Quiz = () => {
     answers,
     setAnswers,
     timeTaken,
-    setUserSlectedAns,
-    userSlectedAns,
+    selectedOptions,
+    setSelectedOptions,
     setCorrectAnswers,
     correctAnswers,
     setLoading,
@@ -152,46 +152,34 @@ const Quiz = () => {
     return <Title>Game Over</Title>;
   }
 
-  const handleItemClick = (name) => {
-    setUserSlectedAns(name);
-  };
-
   const handleNext = () => {
-    if (!userSlectedAns) {
+    if (!selectedOptions) {
       return;
     }
 
     setLoading(true);
 
     setTimeout(() => {
+      const answer = answers;
+      answer.push({
+        question_id: questionData.id,
+        question_option_id: selectedOptions,
+      });
+
+      if (questionIndex === data.length - 1) {
+        return endQuiz({
+          timeTaken,
+          answers,
+        });
+      }
+
+      setCorrectAnswers(correctAnswers);
+      setQuestionIndex(questionIndex + 1);
+      setSelectedOptions(null);
+      setAnswers(answer);
+
       setLoading(false);
     }, 1000);
-
-    let point = 0;
-    if (userSlectedAns === he.decode(questionData.correct_answer)) {
-      point = 1;
-    }
-
-    const answer = answers;
-    answer.push({
-      question: he.decode(questionData.question),
-      user_answer: userSlectedAns,
-      correct_answer: he.decode(questionData.correct_answer),
-      point,
-    });
-
-    if (questionIndex === data.length - 1) {
-      return endQuiz({
-        correctAnswers: correctAnswers + point,
-        timeTaken,
-        questionsAndAnswers: answers,
-      });
-    }
-
-    setCorrectAnswers(correctAnswers + point);
-    setQuestionIndex(questionIndex + 1);
-    setUserSlectedAns(null);
-    setAnswers(answer);
   };
 
   return (
@@ -241,7 +229,7 @@ const Quiz = () => {
                 <InfoText className={classes.opacity}>
                   <h1>
                     <b className={classes.title}>{`Q. ${he.decode(
-                      questionData?.question
+                      questionData?.title
                     )}`}</b>
                   </h1>
                 </InfoText>
@@ -250,21 +238,17 @@ const Quiz = () => {
                 <InfoText>
                   <Grid gutter={20}>
                     {questionData.options.map((option, i) => {
-                      const letter = getLetter(i);
-                      const decodedOption = he.decode(option);
-
                       return (
-                        <Grid.Col key={decodedOption} xs={6}>
+                        <Grid.Col key={i} xs={6}>
                           <Button
                             size="xl"
                             className={clsx(classes.option, {
-                              [classes.active]:
-                                userSlectedAns === decodedOption,
+                              [classes.active]: selectedOptions === option.id,
                             })}
-                            onClick={() => handleItemClick(option)}
+                            onClick={() => setSelectedOptions(option.id)}
                             fullWidth
                           >
-                            {decodedOption}
+                            {option?.title}
                           </Button>
                         </Grid.Col>
                       );
@@ -282,7 +266,7 @@ const Quiz = () => {
               <Grid>
                 <Box
                   className={clsx(classes.button, {
-                    [classes.disabled]: !userSlectedAns,
+                    [classes.disabled]: !selectedOptions,
                   })}
                   onClick={handleNext}
                 ></Box>

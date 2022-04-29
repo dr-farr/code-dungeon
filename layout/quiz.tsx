@@ -20,6 +20,7 @@ import QuizContext from "contexts/Quiz";
 import Image from "next/image";
 
 import { InfoScroll } from "components/InfoText";
+import log from "utils/log";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -92,7 +93,7 @@ const QuizLayout = ({ children }) => {
     error,
     isQuizCompleted,
     resultData,
-    countdownTime,
+
     startQuiz,
     quiz,
     setLoading,
@@ -100,6 +101,7 @@ const QuizLayout = ({ children }) => {
   const { classes } = useStyles();
 
   if (error) {
+    log(error);
     return (
       <Alert color="red">
         Borked
@@ -108,11 +110,7 @@ const QuizLayout = ({ children }) => {
     );
   }
 
-  if (countdownTime === 0) {
-    return <Title> game over</Title>;
-  }
-
-  const handleClick = () => {
+  const handleStart = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -127,7 +125,7 @@ const QuizLayout = ({ children }) => {
           <QuizInfoScroll
             button={
               <Center>
-                <Box className={classes.button} onClick={handleClick}></Box>
+                <Box className={classes.button} onClick={handleStart}></Box>
               </Center>
             }
           >
@@ -139,7 +137,7 @@ const QuizLayout = ({ children }) => {
                 }}
               ></Box>
 
-              <Title order={1}>{quiz?.name}</Title>
+              <Title order={1}>{quiz?.title}</Title>
               <Title order={2}>{quiz?.description}</Title>
             </Group>
           </QuizInfoScroll>

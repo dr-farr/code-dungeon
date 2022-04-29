@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 import { shuffle } from "utils/quiz";
 import { useCompleteQuiz, useQuiz } from "controllers/quiz/hooks";
 import { useUserData } from "@nhost/nextjs";
 import { timeConverter } from "utils/quiz";
+import { from } from "@apollo/client";
 
 interface IContextProps {
   isQuizStarted: any;
@@ -25,13 +26,13 @@ interface IContextProps {
   timeTaken: any;
   setTimeTaken: any;
   setCorrectAnswers: any;
-  userSlectedAns: any;
-  setUserSlectedAns: any;
+  selectedOptions: any;
+  setSelectedOptions: any;
   correctAnswers: any;
-  timeOver: any;
+
   timer: any;
-  setNumOfQuestions: any;
-  numOfQuestions: any;
+  setCategoryQuizes: any;
+  categoryQuizes: any;
 }
 
 const QuizContext = createContext<IContextProps>({
@@ -55,13 +56,13 @@ const QuizContext = createContext<IContextProps>({
   timeTaken: undefined,
   setTimeTaken: undefined,
   setCorrectAnswers: undefined,
-  userSlectedAns: undefined,
-  setUserSlectedAns: undefined,
+  selectedOptions: undefined,
+  setSelectedOptions: undefined,
   correctAnswers: undefined,
-  timeOver: undefined,
+
   timer: undefined,
-  setNumOfQuestions: undefined,
-  numOfQuestions: undefined,
+  setCategoryQuizes: undefined,
+  categoryQuizes: undefined,
 });
 
 export const QuizProvider = ({ children }) => {
@@ -78,53 +79,76 @@ export const QuizProvider = ({ children }) => {
   const [isQuizCompleted, setIsQuizCompleted] = useState(false);
   const [resultData, setResultData] = useState(null);
   const [quizId, setQuizId] = useState(null);
+  const [categoryQuizes, setCategoryQuizes] = useState([]);
+  const [nextQuiz, setNextQuiz] = useState(undefined);
 
-  const [category, setCategory] = useState("0");
-  const [numOfQuestions, setNumOfQuestions] = useState(5);
-  const [difficulty, setDifficulty] = useState("0");
-  const [questionsType, setQuestionsType] = useState("0");
   const [answers, setAnswers] = useState([]);
-  const [timeTaken, setTimeTaken] = useState(null);
+  const [timeTaken, setTimeTaken] = useState<null | number>(null);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [userSlectedAns, setUserSlectedAns] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState(null);
 
   const [offline, setOffline] = useState(false);
+
+  const completeQuiz = useCompleteQuiz();
 
   const {
     data: quizData,
     error: quizDataError,
     loading: quizDataLoading,
-  } = useQuiz({ id: { _eq: quizId } });
+  } = useQuiz(quizId);
+
+  useMemo(() => {
+    if (categoryQuizes?.length > 0) {
+      console.log(categoryQuizes);
+      const index = categoryQuizes?.findIndex(
+        (quiz: any) => quiz?.id === data?.id
+      );
+      // const nextData = categoryQuizes[index + 1];
+      // if (nextData) {
+      //   console.log(nextData);
+      //   setNextQuiz(nextData);
+      // }
+    }
+  }, [categoryQuizes, data]);
 
   const loading = _loading || quizDataLoading;
   const error = _error || quizDataError;
 
-  const user = useUserData();
-
-  const completeQuiz = useCompleteQuiz();
-
   const startQuiz = async () => {
-    setLoading(true);
-    setCountdownTime(defaultCountdownTime);
-    await fetchData();
-    setTimeout(() => {
-      setIsQuizStarted(true);
-      setLoading(false);
-    }, 1000);
-  };
-
-  const endQuiz = (resultData) => {
     setLoading(true);
 
     try {
+      setData(quizData?.questions);
       setTimeout(() => {
+        setCountdownTime(defaultCountdownTime);
+        setIsQuizStarted(true);
+        setLoading(false);
+        startTimer();
+      }, 1000);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const endQuiz = (resultData) => {
+    stopTimer();
+    setLoading(true);
+
+    try {
+      setTimeout(async () => {
         setIsQuizStarted(false);
         setIsQuizCompleted(true);
 
-        completeQuiz({
-          data: { quiz_id: quizData.id, user_id: user?.id },
+        await completeQuiz({
+          data: {
+            quiz_id: quizData.id,
+            answers: {
+              data: [...answers],
+            },
+          },
         });
         setResultData(resultData);
+        setAnswers([]);
         setLoading(false);
       }, 2000);
     } catch (error) {
@@ -163,63 +187,13 @@ export const QuizProvider = ({ children }) => {
     }, 1000);
   };
 
-  const timeOver = () => {
-    return endQuiz({
-      totalQuestions: data?.length,
-      correctAnswers,
-      timeTaken,
-      answers,
-    });
-  };
+  // const timeOver = () => {
+  //   return endQuiz({
+  //     timeTaken,
+  //     answers,
+  //   });
+  // };
 
-  const fetchData = async () => {
-    setLoading(true);
-
-    if (error) {
-      setError(null);
-    }
-
-    const API = `https://opentdb.com/api.php?amount=${numOfQuestions}&category=${category}&difficulty=${difficulty}&type=${questionsType}`;
-
-    try {
-      const response = await fetch(API);
-      const data = await response.json();
-
-      const { response_code, results: question } = data;
-
-      if (response_code === 1) {
-        const message = (
-          <p>
-            The API doesnt have enough questions for your query. (Ex. Asking for
-            50 Questions in a Category that only has 20.)
-            <br />
-            <br />
-            Please change the <strong>No. of Questions</strong>,{" "}
-            <strong>Difficulty Level</strong>, or{" "}
-            <strong>Type of Questions</strong>.
-          </p>
-        );
-
-        setLoading(false);
-        //@ts-ignore
-        setError(message);
-
-        return;
-      }
-
-      setData(
-        question.map((el) => {
-          el.options = shuffle([el.correct_answer, ...el.incorrect_answers]);
-          return el;
-        })
-      );
-
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
-  };
   const sum = (object: {}) =>
     Object.values(object)?.reduce(
       (prev: number, next: number) => prev + next,
@@ -233,28 +207,29 @@ export const QuizProvider = ({ children }) => {
   const formattedTime = timeConverter(timerTime);
   const remainingTime = sum(formattedTime);
 
-  useEffect(() => {
-    if (remainingTime === 0) {
-      timeOver();
-    }
-    const timer = setInterval(() => {
-      const newTime = timerTime - 1000;
+  const { startTimer, stopTimer } = useMemo(() => {
+    let _timer;
 
-      if (newTime >= 0) {
-        setTimerTime(newTime);
-      } else {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(timer);
-      //@ts-ignore
-      setTimeTaken(totalTime - timerTime + 1000);
+    const stopTimer = () => {
+      clearInterval(_timer);
     };
 
-    // eslint-disable-next-line
-  }, [timerTime]);
+    const startTimer = () => {
+      _timer = setInterval(() => {
+        const newTime = timerTime - 1000;
+        setTimeTaken(totalTime - timerTime + 1000);
+
+        if (newTime >= 0) {
+          setTimerTime(newTime);
+        }
+      }, 1000);
+    };
+    return {
+      startTimer,
+      stopTimer,
+      timerTime: _timer,
+    };
+  }, [timerTime, totalTime]);
 
   return (
     <QuizContext.Provider
@@ -279,13 +254,13 @@ export const QuizProvider = ({ children }) => {
         timeTaken,
         setTimeTaken,
         setCorrectAnswers,
-        userSlectedAns,
-        setUserSlectedAns,
+        selectedOptions,
+        setSelectedOptions,
         correctAnswers,
-        timeOver,
+
         timer: formattedTime,
-        setNumOfQuestions,
-        numOfQuestions,
+        setCategoryQuizes,
+        categoryQuizes,
       }}
     >
       {children}

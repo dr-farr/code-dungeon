@@ -53,7 +53,7 @@ export default function App(props: AppProps) {
         <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
           {true && (
             //@ts-ignore
-            <NhostApolloProvider nhost={nhost}>
+            <NhostApolloProvider  nhost={nhost}>
               <MantineProvider
                 withGlobalStyles
                 withNormalizeCSS

@@ -16,19 +16,7 @@ const ShareButton = () => {
   return (
     <Fragment>
       <Button onClick={handleClick}>Share</Button>) : (
-      <Modal
-        onClose={() => {}}
-        opened={true}
-        size="tiny"
-        // trigger={
-        //   <Button
-        //     title="Share"
-        //     floated="right"
-        //     circular
-        //     icon="share alternate"
-        //   />
-        // }
-      >
+      <Modal onClose={() => {}} opened={true} size="tiny">
         <Title className="ui center aligned">Share on</Title>
         <Title className="ui center aligned container">
           <a

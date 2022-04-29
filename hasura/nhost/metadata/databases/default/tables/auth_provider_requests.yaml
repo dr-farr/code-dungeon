@@ -13,5 +13,4 @@ configuration:
     delete_by_pk: deleteAuthProviderRequest
     update_by_pk: updateAuthProviderRequest
   custom_name: authProviderRequests
-  custom_column_names:
-    redirect_url: redirectUrl
+  custom_column_names: {}

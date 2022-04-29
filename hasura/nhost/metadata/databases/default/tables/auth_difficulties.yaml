@@ -1,0 +1,28 @@
+table:
+  schema: auth
+  name: difficulties
+is_enum: true
+insert_permissions:
+  - role: admin_user
+    permission:
+      check: {}
+      columns:
+        - title
+      backend_only: false
+select_permissions:
+  - role: admin_user
+    permission:
+      columns:
+        - title
+      filter: {}
+update_permissions:
+  - role: admin_user
+    permission:
+      columns:
+        - title
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: admin_user
+    permission:
+      filter: {}

@@ -2,11 +2,13 @@ import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import { Group, Title, createStyles, Center, Box } from "@mantine/core";
 
-import { calculateScore, calculateGrade, timeConverter } from "utils/quiz";
+import { timeConverter } from "utils/quiz";
 import Link from "next/link";
 import QuizContext from "contexts/Quiz";
 import InfoText, { InfoScroll } from "components/InfoText";
 import { QuizInfoScroll } from "layout/quiz";
+import { Router } from "tabler-icons-react";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   try: {
@@ -63,30 +65,27 @@ const useStyles = createStyles((theme) => ({
 
 const Stats = () => {
   const { classes } = useStyles();
-  const {
-    numOfQuestions,
-    correctAnswers,
-    timeTaken,
-    replayQuiz,
-    resetQuiz,
-    quiz,
-  } = useContext(QuizContext);
-  const score = calculateScore(numOfQuestions, correctAnswers);
-  const { grade, remarks } = calculateGrade(score);
-  const { hours, minutes, seconds } = timeConverter(timeTaken);
+  const { correctAnswers, timeTaken, replayQuiz, resetQuiz, quiz } =
+    useContext(QuizContext);
 
+  // const { grade, remarks } = calculateGrade(score);
+  const { hours, minutes, seconds } = timeConverter(timeTaken);
+  const router = useRouter();
   return (
     <InfoScroll
       button={
-        score < 75 ? (
+        <Fragment>
           <Center>
             <div className={classes.try} onClick={replayQuiz} />
           </Center>
-        ) : (
+
           <Center>
-            <div className={classes.more} onClick={replayQuiz} />
+            <div
+              className={classes.more}
+              onClick={() => router.push("/settings")}
+            />
           </Center>
-        )
+        </Fragment>
       }
     >
       <Group>
@@ -97,14 +96,7 @@ const Stats = () => {
           }}
         ></Box>
 
-        <h5>{remarks}</h5>
-        <h5>{` Escaped in ${Number(minutes)}:${Number()}s`}</h5>
-
-        <h5> Grade: {grade}</h5>
-        <h5>Total Questions: {numOfQuestions}</h5>
-        <h5>Correct Answers: {correctAnswers}</h5>
-        <h5>Your Score: {score}%</h5>
-        <h5>Passing Score: 60%</h5>
+        <h5>{` Escaped in ${Number(minutes)}:${Number(seconds)}s`}</h5>
       </Group>
     </InfoScroll>
   );

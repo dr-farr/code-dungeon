@@ -1,16 +1,7 @@
 import { ClassNames } from "@emotion/react";
-import {
-  Center,
-  Container,
-  createStyles,
-  Grid,
-  Space,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Center, Container, createStyles, Grid, Stack } from "@mantine/core";
 import clsx from "clsx";
-import Dashboard from "layout/app";
-import Image from "next/image";
+
 import React, { Fragment } from "react";
 
 const useStyles = createStyles((theme) => ({

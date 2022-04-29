@@ -1,14 +1,14 @@
 module.exports = {
   schema: [
     {
-      "https://whflujlkvojfebejcjmk.nhost.run/v1/graphql": {
+      ["https://whflujlkvojfebejcjmk.nhost.run/v1/graphql"]: {
         headers: {
           "x-hasura-admin-secret": process.env.AUTH_TOKEN,
         },
       },
     },
   ],
-  documents: ["./**/*.tsx", "./**/*.ts"],
+  documents: ["controllers/**/*.ts"],
   overwrite: true,
   generates: {
     "./src/generated/graphql.tsx": {

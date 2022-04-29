@@ -5,38 +5,87 @@ object_relationships:
   - name: quiz_category
     using:
       foreign_key_constraint_on: quiz_category_id
+  - name: quiz_user
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: users
+        insertion_order: null
+        column_mapping:
+          user_id: id
 array_relationships:
   - name: questions
     using:
-      foreign_key_constraint_on:
-        column: quiz_id
-        table:
+      manual_configuration:
+        remote_table:
           schema: auth
           name: questions
-select_permissions:
-  - role: public
+        insertion_order: null
+        column_mapping:
+          id: quiz_id
+insert_permissions:
+  - role: admin_user
     permission:
+      check: {}
       columns:
-        - difficulty
+        - created_at
         - description
+        - difficulty
+        - id
+        - published
+        - quiz_category_id
         - title
         - type
-        - created_at
         - updated_at
+        - user_id
+      backend_only: false
+select_permissions:
+  - role: admin_user
+    permission:
+      columns:
+        - created_at
+        - description
+        - difficulty
         - id
+        - published
         - quiz_category_id
+        - title
+        - type
+        - updated_at
+        - user_id
       filter: {}
       allow_aggregations: true
   - role: user
     permission:
       columns:
-        - difficulty
-        - description
-        - title
-        - type
         - created_at
-        - updated_at
+        - description
+        - difficulty
         - id
         - quiz_category_id
+        - title
+        - type
+        - updated_at
+        - user_id
       filter: {}
-      allow_aggregations: true
+update_permissions:
+  - role: admin_user
+    permission:
+      columns:
+        - created_at
+        - description
+        - difficulty
+        - id
+        - published
+        - quiz_category_id
+        - title
+        - type
+        - updated_at
+        - user_id
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: admin_user
+    permission:
+      filter: {}

@@ -10,6 +10,7 @@ const useStyles = createStyles((theme) => ({
   root: {
     backgroundImage: "url(/assets/quiz-background.png)",
     backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
     height: "100%",
     width: "100%",
     backgroundSize: "cover",

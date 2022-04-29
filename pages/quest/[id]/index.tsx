@@ -14,16 +14,23 @@ import Image from "next/image";
 import Dashboard from "layout/app";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import QuizContext from "contexts/Quiz";
 
 function QuestPage({ id }) {
-  const { data, loading, error } = useQuizCategory({ id: { _eq: id } });
-
+  const { data, loading, error } = useQuizCategory(id);
   const router = useRouter();
 
-  console.log(error);
+  const { setCategoryQuizes, categoryQuizes } = useContext(QuizContext);
+
+  if (error) {
+    return <Text>Errors are real</Text>;
+  }
+
   if (!data) {
     return <Text>Nothing is real</Text>;
   }
+
+  setCategoryQuizes(data.quizes);
 
   return (
     <Dashboard>
@@ -33,7 +40,7 @@ function QuestPage({ id }) {
             <Image
               width="300"
               height="90"
-              alt={data?.name}
+              alt={data?.title}
               src={data?.image_url}
             />
           </Grid.Col>
@@ -42,7 +49,7 @@ function QuestPage({ id }) {
               <div>nah</div>
             ) : (
               <Grid>
-                {data.quizes.map((quiz, idx) => {
+                {data?.quizes.map((quiz, idx) => {
                   return (
                     <Grid.Col key={idx}>
                       <Card
@@ -50,7 +57,7 @@ function QuestPage({ id }) {
                           router.push(`/quiz/${quiz.id}`);
                         }}
                       >
-                        <Text>{quiz?.name}</Text>
+                        <Text>{quiz?.title}</Text>
                       </Card>
                     </Grid.Col>
                   );

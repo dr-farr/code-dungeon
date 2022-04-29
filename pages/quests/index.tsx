@@ -104,43 +104,17 @@ const QuestList = () => {
 export default function Home() {
   const user = useUserData();
 
-  return user ? (
+  return (
     <Dashboard>
-      {!process.env.LIVE ? (
-        <InfoScroll>
-          <div>Greetings traveller,</div>
-          <Space h={1} />
-          <div>
-            The Code Dungeon is a place where you can test your skills to their
-            full potential. Many have walked through these hallowed chambers,
-            very few have managed to escape them. For those who did; none with
-            their sanity intact.
-            <br /> You will need to utilise many different types of skills to
-            survive down here.
-          </div>
-          <Space h={1} />
+      <Stack>
+        <InfoText>
+          <Title order={1}>
+            Welcome to the Code Dungeon™ {user?.displayName},
+          </Title>
+        </InfoText>
 
-          <div>
-            Keep an eye on your email for when new quests become available.
-          </div>
-          <Space h={1} />
-          <div>Until we prevail,</div>
-          <Space h={1} />
-          <div> Samuel Von Jackson </div>
-        </InfoScroll>
-      ) : (
-        <Stack>
-          <InfoText>
-            <Title order={1}>
-              Welcome to the Code Dungeon™ {user?.displayName},
-            </Title>
-          </InfoText>
-
-          <QuestList />
-        </Stack>
-      )}
+        <QuestList />
+      </Stack>
     </Dashboard>
-  ) : (
-    <Login />
   );
 }

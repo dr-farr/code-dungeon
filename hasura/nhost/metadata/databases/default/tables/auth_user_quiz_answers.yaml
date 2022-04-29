@@ -1,7 +1,16 @@
 table:
   schema: auth
-  name: question_options
-array_relationships:
+  name: user_quiz_answers
+object_relationships:
+  - name: option
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: question_options
+        insertion_order: null
+        column_mapping:
+          question_option_id: id
   - name: question
     using:
       manual_configuration:
@@ -11,46 +20,45 @@ array_relationships:
         insertion_order: null
         column_mapping:
           question_id: id
+  - name: user
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: users
+        insertion_order: null
+        column_mapping:
+          user_id: id
 insert_permissions:
   - role: admin_user
     permission:
       check: {}
       columns:
-        - title
-        - created_at
-        - updated_at
         - id
         - question_id
+        - question_option_id
+        - user_quiz_id
+        - user_id
       backend_only: false
 select_permissions:
   - role: admin_user
     permission:
       columns:
-        - title
-        - created_at
-        - updated_at
         - id
         - question_id
+        - question_option_id
+        - user_quiz_id
+        - user_id
       filter: {}
-  - role: user
-    permission:
-      columns:
-        - title
-        - created_at
-        - updated_at
-        - id
-        - question_id
-      filter: {}
-      allow_aggregations: true
 update_permissions:
   - role: admin_user
     permission:
       columns:
-        - title
-        - created_at
-        - updated_at
         - id
         - question_id
+        - question_option_id
+        - user_quiz_id
+        - user_id
       filter: {}
       check: {}
 delete_permissions:

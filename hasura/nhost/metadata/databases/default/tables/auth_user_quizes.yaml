@@ -1,26 +1,7 @@
 table:
   schema: auth
-  name: questions
+  name: user_quizes
 object_relationships:
-  - name: correct_option
-    using:
-      manual_configuration:
-        remote_table:
-          schema: auth
-          name: question_options
-        insertion_order: null
-        column_mapping:
-          correct_option_id: id
-array_relationships:
-  - name: options
-    using:
-      manual_configuration:
-        remote_table:
-          schema: auth
-          name: question_options
-        insertion_order: null
-        column_mapping:
-          id: question_id
   - name: quiz
     using:
       manual_configuration:
@@ -30,48 +11,59 @@ array_relationships:
         insertion_order: null
         column_mapping:
           quiz_id: id
+array_relationships:
+  - name: answers
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: user_quiz_answers
+        insertion_order: null
+        column_mapping:
+          id: user_quiz_id
+          user_id: user_id
 insert_permissions:
   - role: admin_user
     permission:
       check: {}
       columns:
-        - order
-        - description
-        - title
-        - type
+        - completed_at
         - created_at
-        - updated_at
-        - correct_option_id
+        - grade
         - id
         - quiz_id
+        - seconds_taken
+        - time
+        - updated_at
+        - user_id
       backend_only: false
 select_permissions:
   - role: admin_user
     permission:
       columns:
-        - order
-        - description
-        - title
-        - type
+        - completed_at
         - created_at
-        - updated_at
-        - correct_option_id
+        - grade
         - id
         - quiz_id
+        - seconds_taken
+        - time
+        - updated_at
+        - user_id
       filter: {}
 update_permissions:
   - role: admin_user
     permission:
       columns:
-        - order
-        - description
-        - title
-        - type
+        - completed_at
         - created_at
-        - updated_at
-        - correct_option_id
+        - grade
         - id
         - quiz_id
+        - seconds_taken
+        - time
+        - updated_at
+        - user_id
       filter: {}
       check: {}
 delete_permissions:
