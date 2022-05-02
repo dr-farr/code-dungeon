@@ -16,6 +16,7 @@ import { useUserQuizes } from "controllers/quiz/hooks";
 import Dashboard from "layout/app";
 import Link from "next/link";
 import React, { Fragment } from "react";
+import { calculateGrade } from "utils/quiz";
 
 const Email = () => {
   const form = useForm({
@@ -54,18 +55,19 @@ const Email = () => {
 };
 const Quizes = () => {
   const { data } = useUserQuizes();
-  console.log(data);
+
   return (
     <InfoText>
       <Title>Progress</Title>
 
       {data?.map((quiz, idx) => {
+        const { grade } = calculateGrade(quiz?.score ?? 0);
         return (
           <Link key={idx} href={`/quiz/${quiz.id}`} passHref>
             <Paper>
               <Fragment>
                 {quiz?.quiz?.quiz_category?.title} - {quiz?.quiz?.title}- Grade{" "}
-                {quiz?.grade}
+                {grade}
               </Fragment>
             </Paper>
           </Link>

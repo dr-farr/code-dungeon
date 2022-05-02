@@ -242,8 +242,18 @@ export const COMPLETE_QUIZ = gql`
 `;
 
 export const GET_COMPLETED_QUIZES = gql`
-  query completedQuizes($where: auth_user_quizes_bool_exp) {
-    auth_user_quizes(where: $where) {
+  query completedQuizes(
+    $distinct_on: [auth_user_quizes_select_column!]
+    $where: auth_user_quizes_bool_exp
+    $order_by: [auth_user_quizes_order_by!]
+    $limit: Int
+  ) {
+    auth_user_quizes(
+      distinct_on: $distinct_on
+      where: $where
+      order_by: $order_by
+      limit: $limit
+    ) {
       id
       score
       quiz_id

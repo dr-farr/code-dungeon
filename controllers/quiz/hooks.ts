@@ -158,7 +158,7 @@ export function useCompleteQuiz() {
 export function useUserQuizes(
   where?,
 
-  orderBy?,
+  order_by?,
 
   limit?,
 
@@ -175,11 +175,11 @@ export function useUserQuizes(
         user_id: { _eq: user?.id },
         quiz: { id: { _is_null: false } },
       },
-      orderBy: {
-        ...orderBy,
-        order_by: { grade: "desc_nulls_last" },
+      order_by: {
+        ...order_by,
+        score: "desc_nulls_last",
       },
-      limit: limit ?? 1,
+
       offset,
     },
     context: {
