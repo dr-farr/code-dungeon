@@ -169,7 +169,6 @@ export function useUserQuizes(
   const user = useUserData();
   const query = useAuthQuery(GET_COMPLETED_QUIZES, {
     variables: {
-      distinct_on: "score",
       where: {
         ...where,
         user_id: { _eq: user?.id },
@@ -177,7 +176,6 @@ export function useUserQuizes(
       },
       order_by: {
         ...order_by,
-        score: "desc_nulls_last",
       },
 
       offset,

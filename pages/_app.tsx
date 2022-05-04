@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "styles/globals.css";
 import Head from "next/head";
 import Image from "next/image";
 import {
@@ -20,6 +20,7 @@ import nhost from "utils/nhost";
 import { Fragment } from "react";
 import { QuizProvider } from "contexts/Quiz";
 import { useUserData } from "@nhost/nextjs";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   const { classes } = useStyles();
-
+  const router = useRouter();
   return (
     <Fragment>
       <Head>
@@ -53,7 +54,7 @@ export default function App(props: AppProps) {
         <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
           {true && (
             //@ts-ignore
-            <NhostApolloProvider  nhost={nhost}>
+            <NhostApolloProvider nhost={nhost}>
               <MantineProvider
                 withGlobalStyles
                 withNormalizeCSS
@@ -70,7 +71,7 @@ export default function App(props: AppProps) {
                 }}
               >
                 <QuizProvider>
-                  <div className="app">
+                  <div className={`app ${router.pathname.replace("/", "")}`}>
                     <NotificationsProvider>
                       <Component {...pageProps} />
                     </NotificationsProvider>

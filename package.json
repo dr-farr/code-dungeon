@@ -25,6 +25,7 @@
     "@types/node": "^17.0.31",
     "apollo-link-http": "^1.5.17",
     "apollo-server": "^3.6.7",
+    "dayjs": "^1.11.1",
     "express": "^4.17.3",
     "graphql": "16.3.0",
     "graphql-tools": "^8.2.8",

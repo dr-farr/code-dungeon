@@ -249,14 +249,16 @@ export const GET_COMPLETED_QUIZES = gql`
     $limit: Int
   ) {
     auth_user_quizes(
-      distinct_on: $distinct_on
+      distinct_on: quiz_id
       where: $where
-      order_by: $order_by
+      order_by: { quiz_id: asc }
       limit: $limit
     ) {
       id
       score
       quiz_id
+
+      completed_at
       quiz {
         id
         title
