@@ -143,7 +143,8 @@ const Quiz = () => {
     correctAnswers,
     setLoading,
     loading,
-    timer: { minutes, seconds },
+    minutes,
+    seconds,
   } = useContext(QuizContext);
 
   const questionData = data && data[questionIndex] ? data[questionIndex] : null;

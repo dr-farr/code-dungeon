@@ -4,7 +4,7 @@ import { useCompleteQuiz, useQuiz } from "controllers/quiz/hooks";
 import { useUserData } from "@nhost/nextjs";
 import { timeConverter } from "utils/quiz";
 import { from } from "@apollo/client";
-
+import useCountdownTimer from "hooks/useCountdownTimer";
 interface IContextProps {
   isQuizStarted: any;
   countdownTime: any;
@@ -30,7 +30,8 @@ interface IContextProps {
   setSelectedOptions: any;
   correctAnswers: any;
 
-  timer: any;
+  minutes: any;
+  seconds: any;
   setCategoryQuizes: any;
   categoryQuizes: any;
 }
@@ -59,10 +60,10 @@ const QuizContext = createContext<IContextProps>({
   selectedOptions: undefined,
   setSelectedOptions: undefined,
   correctAnswers: undefined,
-
-  timer: undefined,
   setCategoryQuizes: undefined,
   categoryQuizes: undefined,
+  minutes: undefined,
+  seconds: undefined,
 });
 
 export const QuizProvider = ({ children }) => {
@@ -130,7 +131,7 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
-  const endQuiz = (resultData) => {
+  const endQuiz = (resultData?: any) => {
     stopTimer();
     setLoading(true);
 
@@ -207,29 +208,19 @@ export const QuizProvider = ({ children }) => {
   const formattedTime = timeConverter(timerTime);
   const remainingTime = sum(formattedTime);
 
-  const { startTimer, stopTimer } = useMemo(() => {
-    let _timer;
+  const { minutes, seconds, start, stop, running } = useCountdownTimer();
 
-    const stopTimer = () => {
-      clearInterval(_timer);
-    };
+  const stopTimer = () => {
+    stop();
+  };
 
-    const startTimer = () => {
-      _timer = setInterval(() => {
-        const newTime = timerTime - 1000;
-        setTimeTaken(totalTime - timerTime + 1000);
+  const startTimer = () => {
+    start();
+  };
 
-        if (newTime >= 0) {
-          setTimerTime(newTime);
-        }
-      }, 1000);
-    };
-    return {
-      startTimer,
-      stopTimer,
-      timerTime: _timer,
-    };
-  }, [timerTime, totalTime]);
+  if (running && seconds === 0 && minutes === 0) {
+    endQuiz();
+  }
 
   return (
     <QuizContext.Provider
@@ -258,7 +249,8 @@ export const QuizProvider = ({ children }) => {
         setSelectedOptions,
         correctAnswers,
 
-        timer: formattedTime,
+        minutes,
+        seconds,
         setCategoryQuizes,
         categoryQuizes,
       }}
