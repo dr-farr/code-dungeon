@@ -141,6 +141,11 @@ export const GET_BASIC_QUIZ = gql`
       id
       title
       description
+      quiz_category {
+        id
+        title
+        image_url
+      }
       questions {
         id
         title
