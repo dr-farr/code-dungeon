@@ -15,6 +15,7 @@ import {
   Grid,
   Avatar,
 } from "@mantine/core";
+
 import Image from "next/image";
 import { useForm } from "@mantine/form";
 import InfoText from "components/InfoText";
@@ -29,6 +30,65 @@ dayjs.extend(relativeTime);
 
 import { useUserData } from "@nhost/react";
 import { groupBy, isNumber } from "@s-libs/micro-dash";
+
+import RadarChart from "react-svg-radar-chart";
+import "react-svg-radar-chart/build/css/index.css";
+
+const Graph = () => {
+  const data = [
+    {
+      data: {
+        battery: 0.7,
+        design: 0.8,
+        useful: 0.9,
+        speed: 0.67,
+        weight: 0.8,
+      },
+      meta: { color: "blue" },
+    },
+    {
+      data: {
+        battery: 0.6,
+        design: 0.85,
+        useful: 0.5,
+        speed: 0.6,
+        weight: 0.7,
+      },
+      meta: { color: "red" },
+    },
+  ];
+
+  const captions = {
+    // columns
+    battery: "Battery Capacity",
+    design: "Design",
+    useful: "Usefulness",
+    speed: "Speed",
+    weight: "Weight",
+  };
+
+  return (
+    <div>
+      <RadarChart
+        size={200}
+        captionProps={{
+          textAnchor: "middle",
+          fontSize: 20,
+          fontFamily: "sans-serif",
+        }}
+        captions={{
+          // columns
+          battery: "Teeny",
+          design: "Weeny",
+          useful: "Polka",
+          speed: "Dot",
+          weight: "Binkini",
+        }}
+        data={data}
+      />
+    </div>
+  );
+};
 
 const Email = () => {
   const user = useUserData();
@@ -123,14 +183,26 @@ export default function SettingsPage() {
           <Stack>
             <Title order={6}>Character</Title>
             <Grid>
-              <Grid.Col xs={6}>
+              <Grid.Col xs={1.5}>
                 <Avatar
                   size="xl"
                   src="https://user-images.githubusercontent.com/78376735/162839437-7bea91c7-be0a-4d35-b2b9-89cb239b0a07.jpeg"
                 />
               </Grid.Col>
-              <Grid.Col xs={6}>
+              <Grid.Col xs={7}>
+                <Title order={4}>Mage Toad</Title>
                 <Title order={6}> Level 3</Title>
+                <Text>
+                  You are a lil baby magic toad, this is your first time playing
+                  as a mage and you are ready to start your journey. Watch out
+                  for the monsters, they are not friendly. Also watch out for
+                  the quests, they are not friendly. As a toad, you are not
+                  amage, you are a toad and moreso a mage.
+                </Text>
+              </Grid.Col>
+
+              <Grid.Col xs={3}>
+                <Graph />
               </Grid.Col>
             </Grid>
           </Stack>

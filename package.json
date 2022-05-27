@@ -31,9 +31,11 @@
     "graphql-tools": "^8.2.8",
     "he": "1.2.0",
     "jotai": "1.6.2",
+    "mixpanel-browser": "^2.45.0",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-svg-radar-chart": "^1.4.0",
     "tabler-icons-react": "1.46.0"
   },
   "devDependencies": {
