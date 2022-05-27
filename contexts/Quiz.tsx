@@ -29,11 +29,10 @@ interface IContextProps {
   selectedOptions: any;
   setSelectedOptions: any;
   correctAnswers: any;
-
-  minutes: any;
-  seconds: any;
+  time: any;
   setCategoryQuizes: any;
   categoryQuizes: any;
+  clock: any;
 }
 
 const QuizContext = createContext<IContextProps>({
@@ -62,8 +61,8 @@ const QuizContext = createContext<IContextProps>({
   correctAnswers: undefined,
   setCategoryQuizes: undefined,
   categoryQuizes: undefined,
-  minutes: undefined,
-  seconds: undefined,
+  time: undefined,
+  clock: undefined,
 });
 
 export const QuizProvider = ({ children }) => {
@@ -208,7 +207,9 @@ export const QuizProvider = ({ children }) => {
   const formattedTime = timeConverter(timerTime);
   const remainingTime = sum(formattedTime);
 
-  const { minutes, seconds, start, stop, running } = useCountdownTimer();
+  const { time, start, pause, reset, status } = useCountdownTimer({
+    initialTime: 130,
+  });
 
   const stopTimer = () => {
     stop();
@@ -218,9 +219,9 @@ export const QuizProvider = ({ children }) => {
     start();
   };
 
-  if (running && seconds === 0 && minutes === 0) {
-    endQuiz();
-  }
+  const clock = `${Math.floor(time / 60)
+    .toString()
+    .padStart(2, "0")}:${(time % 60).toString().padStart(2, "0")}`;
 
   return (
     <QuizContext.Provider
@@ -248,11 +249,10 @@ export const QuizProvider = ({ children }) => {
         selectedOptions,
         setSelectedOptions,
         correctAnswers,
-
-        minutes,
-        seconds,
+        time,
         setCategoryQuizes,
         categoryQuizes,
+        clock,
       }}
     >
       {children}

@@ -143,11 +143,16 @@ const Quiz = () => {
     correctAnswers,
     setLoading,
     loading,
-    minutes,
-    seconds,
+    clock,
+    quiz,
+    time,
   } = useContext(QuizContext);
 
   const questionData = data && data[questionIndex] ? data[questionIndex] : null;
+
+  if (!loading && !time) {
+    endQuiz();
+  }
 
   if (!questionData) {
     return <Title>Game Over</Title>;
@@ -210,13 +215,21 @@ const Quiz = () => {
                     alt="Code Dungeon"
                   />
                 </Center>{" "}
+                <Center>
+                  <Image
+                    width="946"
+                    height="261"
+                    src={quiz?.quiz_category?.image_url}
+                    alt={quiz?.quiz_category?.title}
+                  />
+                </Center>{" "}
               </Grid.Col>
               <Grid.Col xs={7} className={classes.silver}>
+                <h4>{quiz.title.toUpperCase()}</h4>
                 <h3>{`Chamber ${questionIndex + 1} of ${data?.length}`}</h3>
               </Grid.Col>
               <Grid.Col xs={2} className={classes.silver}>
-                <h3>{minutes}</h3>
-                <h3>:{seconds}</h3>
+                <h3>{clock}</h3>
               </Grid.Col>
             </Grid>
             <Space h="xl" />

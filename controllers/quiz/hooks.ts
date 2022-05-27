@@ -141,11 +141,10 @@ export function useCompleteQuiz() {
   const user = useUserData();
 
   return (variables) => {
-    console.log(variables);
     const correctAnswerCount = variables.data.answers.data.map(
       ({ option_id }) => option_id
     );
-    console.log(correctAnswerCount);
+
     variables.data.user_id = user?.id;
     variables.data.completed_at = new Date();
     variables.data.created_at = new Date();
