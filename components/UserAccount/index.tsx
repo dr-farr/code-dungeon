@@ -23,6 +23,9 @@ export default function User() {
     <Menu
       control={
         <UnstyledButton
+          onClick={() => {
+            router.push("/account");
+          }}
           sx={{
             display: "block",
             width: "100%",
