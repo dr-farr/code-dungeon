@@ -212,7 +212,7 @@ export const QuizProvider = ({ children }) => {
   });
 
   const stopTimer = () => {
-    stop();
+    pause();
   };
 
   const startTimer = () => {

@@ -32,6 +32,10 @@ function QuestPage({ id }) {
 
   setCategoryQuizes(data.quizes);
 
+  if (data && data?.questions?.length) {
+    return <div>nah</div>;
+  }
+
   return (
     <Dashboard>
       <Container size="xl">
@@ -44,27 +48,22 @@ function QuestPage({ id }) {
               src={data?.image_url}
             />
           </Grid.Col>
-          <Grid.Col>
-            {data && data?.questions?.length ? (
-              <div>nah</div>
-            ) : (
-              <Grid>
-                {data?.quizes.map((quiz, idx) => {
-                  return (
-                    <Grid.Col key={idx}>
-                      <Card
-                        onClick={() => {
-                          router.push(`/quiz/${quiz.id}`);
-                        }}
-                      >
-                        <Text>{quiz?.title}</Text>
-                      </Card>
-                    </Grid.Col>
-                  );
-                })}
-              </Grid>
-            )}
-          </Grid.Col>
+        </Grid>
+
+        <Grid>
+          {data?.quizes.map((quiz, idx) => {
+            return (
+              <Grid.Col xs={3} key={idx}>
+                <Card
+                  onClick={() => {
+                    router.push(`/quiz/${quiz.id}`);
+                  }}
+                >
+                  <Text>{quiz?.title}</Text>
+                </Card>
+              </Grid.Col>
+            );
+          })}
         </Grid>
       </Container>
     </Dashboard>

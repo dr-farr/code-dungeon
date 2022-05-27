@@ -65,11 +65,9 @@ const useStyles = createStyles((theme) => ({
 
 const Stats = () => {
   const { classes } = useStyles();
-  const { correctAnswers, timeTaken, replayQuiz, resetQuiz, quiz } =
+  const { timeTaken, replayQuiz, resetQuiz, quiz, clock } =
     useContext(QuizContext);
 
-  // const { grade, remarks } = calculateGrade(score);
-  const { hours, minutes, seconds } = timeConverter(timeTaken);
   const router = useRouter();
   return (
     <InfoScroll
@@ -82,7 +80,7 @@ const Stats = () => {
           <Center>
             <div
               className={classes.more}
-              onClick={() => router.push("/settings")}
+              onClick={() => router.push("/quests")}
             />
           </Center>
         </Fragment>
@@ -95,8 +93,7 @@ const Stats = () => {
             backgroundImage: `url(${quiz?.quiz_category?.image_url})`,
           }}
         ></Box>
-
-        <h5>{` Escaped in ${Number(minutes)}:${Number(seconds)}s`}</h5>
+        <Title order={2}>{` Escaped in ${clock}`}</Title>
       </Group>
     </InfoScroll>
   );
