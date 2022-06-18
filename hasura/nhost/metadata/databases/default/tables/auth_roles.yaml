@@ -13,6 +13,7 @@ configuration:
     delete_by_pk: deleteAuthRole
     update_by_pk: updateAuthRole
   custom_name: authRoles
+  column_config: {}
   custom_column_names: {}
 array_relationships:
   - name: userRoles

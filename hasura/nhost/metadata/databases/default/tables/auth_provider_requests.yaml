@@ -13,4 +13,5 @@ configuration:
     delete_by_pk: deleteAuthProviderRequest
     update_by_pk: updateAuthProviderRequest
   custom_name: authProviderRequests
+  column_config: {}
   custom_column_names: {}

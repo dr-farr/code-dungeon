@@ -13,6 +13,15 @@ configuration:
     delete_by_pk: deleteAuthRefreshToken
     update_by_pk: updateAuthRefreshToken
   custom_name: authRefreshTokens
+  column_config:
+    refresh_token:
+      custom_name: refreshToken
+    expires_at:
+      custom_name: expiresAt
+    created_at:
+      custom_name: createdAt
+    user_id:
+      custom_name: userId
   custom_column_names:
     refresh_token: refreshToken
     expires_at: expiresAt

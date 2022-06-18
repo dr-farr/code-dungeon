@@ -13,6 +13,43 @@ configuration:
     delete_by_pk: deleteUser
     update_by_pk: updateUser
   custom_name: users
+  column_config:
+    display_name:
+      custom_name: displayName
+    email_verified:
+      custom_name: emailVerified
+    phone_number:
+      custom_name: phoneNumber
+    last_seen:
+      custom_name: lastSeen
+    otp_hash_expires_at:
+      custom_name: otpHashExpiresAt
+    otp_method_last_used:
+      custom_name: otpMethodLastUsed
+    phone_number_verified:
+      custom_name: phoneNumberVerified
+    updated_at:
+      custom_name: updatedAt
+    new_email:
+      custom_name: newEmail
+    password_hash:
+      custom_name: passwordHash
+    created_at:
+      custom_name: createdAt
+    avatar_url:
+      custom_name: avatarUrl
+    default_role:
+      custom_name: defaultRole
+    active_mfa_type:
+      custom_name: activeMfaType
+    otp_hash:
+      custom_name: otpHash
+    totp_secret:
+      custom_name: totpSecret
+    is_anonymous:
+      custom_name: isAnonymous
+    ticket_expires_at:
+      custom_name: ticketExpiresAt
   custom_column_names:
     display_name: displayName
     email_verified: emailVerified

@@ -13,6 +13,21 @@ configuration:
     delete_by_pk: deleteAuthUserProvider
     update_by_pk: updateAuthUserProvider
   custom_name: authUserProviders
+  column_config:
+    provider_user_id:
+      custom_name: providerUserId
+    access_token:
+      custom_name: accessToken
+    provider_id:
+      custom_name: providerId
+    refresh_token:
+      custom_name: refreshToken
+    updated_at:
+      custom_name: updatedAt
+    created_at:
+      custom_name: createdAt
+    user_id:
+      custom_name: userId
   custom_column_names:
     provider_user_id: providerUserId
     access_token: accessToken

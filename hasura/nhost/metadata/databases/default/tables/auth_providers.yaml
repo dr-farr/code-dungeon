@@ -13,6 +13,7 @@ configuration:
     delete_by_pk: deleteAuthProvider
     update_by_pk: updateAuthProvider
   custom_name: authProviders
+  column_config: {}
   custom_column_names: {}
 array_relationships:
   - name: userProviders

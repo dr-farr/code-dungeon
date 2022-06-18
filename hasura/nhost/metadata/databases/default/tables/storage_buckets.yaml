@@ -13,6 +13,23 @@ configuration:
     delete_by_pk: deleteBucket
     update_by_pk: updateBucket
   custom_name: buckets
+  column_config:
+    min_upload_file_size:
+      custom_name: minUploadFileSize
+    download_expiration:
+      custom_name: downloadExpiration
+    presigned_urls_enabled:
+      custom_name: presignedUrlsEnabled
+    cache_control:
+      custom_name: cacheControl
+    updated_at:
+      custom_name: updatedAt
+    created_at:
+      custom_name: createdAt
+    id:
+      custom_name: id
+    max_upload_file_size:
+      custom_name: maxUploadFileSize
   custom_column_names:
     min_upload_file_size: minUploadFileSize
     download_expiration: downloadExpiration

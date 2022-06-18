@@ -13,6 +13,11 @@ configuration:
     delete_by_pk: deleteAuthUserRole
     update_by_pk: updateAuthUserRole
   custom_name: authUserRoles
+  column_config:
+    created_at:
+      custom_name: createdAt
+    user_id:
+      custom_name: userId
   custom_column_names:
     created_at: createdAt
     user_id: userId

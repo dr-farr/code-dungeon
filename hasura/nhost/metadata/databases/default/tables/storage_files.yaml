@@ -13,6 +13,27 @@ configuration:
     delete_by_pk: deleteFile
     update_by_pk: updateFile
   custom_name: files
+  column_config:
+    etag:
+      custom_name: etag
+    is_uploaded:
+      custom_name: isUploaded
+    uploaded_by_user_id:
+      custom_name: uploadedByUserId
+    size:
+      custom_name: size
+    mime_type:
+      custom_name: mimeType
+    bucket_id:
+      custom_name: bucketId
+    name:
+      custom_name: name
+    updated_at:
+      custom_name: updatedAt
+    created_at:
+      custom_name: createdAt
+    id:
+      custom_name: id
   custom_column_names:
     etag: etag
     is_uploaded: isUploaded

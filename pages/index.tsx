@@ -106,7 +106,7 @@ export default function Home() {
 
   return user ? (
     <Dashboard>
-      {!process.env.LIVE ? (
+      {process.env.LIVE ? (
         <InfoScroll>
           <div>Greetings traveller,</div>
           <Space h={1} />

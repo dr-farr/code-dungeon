@@ -27,7 +27,7 @@
     "apollo-server": "^3.6.7",
     "dayjs": "^1.11.1",
     "express": "^4.17.3",
-    "graphql": "16.3.0",
+    "graphql": "^16.3.0",
     "graphql-tools": "^8.2.8",
     "he": "1.2.0",
     "jotai": "1.6.2",

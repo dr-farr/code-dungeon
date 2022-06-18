@@ -27,42 +27,39 @@ insert_permissions:
     permission:
       check: {}
       columns:
-        - completed_at
-        - created_at
-        - grade
-        - id
         - quiz_id
-        - seconds_taken
-        - time
-        - updated_at
         - user_id
+        - id
+        - created_at
+        - updated_at
+        - completed_at
+        - completed_in
+        - score
       backend_only: false
 select_permissions:
   - role: admin_user
     permission:
       columns:
+        - score
+        - completed_in
         - completed_at
         - created_at
-        - grade
+        - updated_at
         - id
         - quiz_id
-        - seconds_taken
-        - time
-        - updated_at
         - user_id
       filter: {}
 update_permissions:
   - role: admin_user
     permission:
       columns:
+        - score
+        - completed_in
         - completed_at
         - created_at
-        - grade
+        - updated_at
         - id
         - quiz_id
-        - seconds_taken
-        - time
-        - updated_at
         - user_id
       filter: {}
       check: {}
@@ -70,3 +67,17 @@ delete_permissions:
   - role: admin_user
     permission:
       filter: {}
+event_triggers:
+  - name: complete_quiz
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: https://whflujlkvojfebejcjmk.nhost.run/v1/functions/user_quiz/insert
+    headers:
+      - name: nhost-webhook-secret
+        value_from_env: NHOST_WEBHOOK_SECRET
